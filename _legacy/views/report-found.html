@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Found Item - CampusSafe</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+        <!-- 1. Top Navbar -->
+        <nav class="top-navbar">
+            <div class="nav-brand"><i class="fas fa-cube"></i> CampusSafe</div>
+            <button class="secondary-button" onclick="location.href='/dashboard'"><i class="fas fa-times"></i>
+                Exit</button>
+        </nav>
+
+        <!-- 2. Sidebar -->
+        <aside class="sidebar">
+            <a href="/dashboard" class="nav-link"><i class="fas fa-th-large"></i> Dashboard</a>
+            <a href="/browse" class="nav-link"><i class="fas fa-shopping-bag"></i> Browse Marketplace</a>
+            <a href="/report-lost" class="nav-link"><i class="fas fa-search-minus"></i> Report Lost Item</a>
+            <a href="/report-found" class="nav-link active"><i class="fas fa-search-plus"></i> Report Found Item</a>
+        </aside>
+
+        <!-- 3. Main Content -->
+        <main class="main-content page-fade-in">
+            <div class="content-container">
+                <div style="text-align: center; margin-bottom: 32px;">
+                    <h1 style="margin: 0 0 8px 0;">Report a Found Item</h1>
+                    <p style="margin: 0; color: var(--text-muted);">Thank you for helping return items to their owners.
+                    </p>
+                </div>
+
+                <!-- Unified Form Card -->
+                <div class="form-card" style="border-top: 4px solid var(--success);">
+                    <form
+                        onsubmit="event.preventDefault(); window.showToast('Thank you! Report logged.', 'success'); setTimeout(()=> location.href='/dashboard', 1500);">
+
+                        <!-- Item Name -->
+                        <div class="form-group">
+                            <label>What did you find?</label>
+                            <input type="text" class="input-field" placeholder="e.g. Black Umbrella, iPhone, Keys"
+                                required>
+                        </div>
+
+                        <!-- 2-Column Grid -->
+                        <div class="form-grid">
+                            <div>
+                                <label>Category</label>
+                                <select class="select-field">
+                                    <option>Electronics</option>
+                                    <option>Clothing & Accessories</option>
+                                    <option>Books / Course Materials</option>
+                                    <option>Keys & ID Cards</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Date Found</label>
+                                <input type="date" class="input-field">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Where did you find it?</label>
+                            <input type="text" class="input-field" placeholder="e.g. Cafeteria Table 4">
+                        </div>
+
+                        <!-- HANDOVER SYSTEM -->
+                        <div class="card" style="background: #F0FDF4; border: 1px solid #BBF7D0; margin-top: 32px;">
+                            <h3 style="margin: 0 0 16px 0; font-size: 1rem; color: #166534;"><i
+                                    class="fas fa-hand-holding-heart"></i> Item Handover</h3>
+
+                            <div class="form-group">
+                                <label style="color: #166534;">Where did you submit the item?</label>
+                                <select class="select-field" style="border-color: #BBF7D0;">
+                                    <option>Security Office (Main Building)</option>
+                                    <option>Student Center Front Desk</option>
+                                    <option>Library Circulation Desk</option>
+                                    <option>Department Office</option>
+                                    <option>I am still holding it (Not Recommended)</option>
+                                </select>
+                                <p style="font-size: 0.85rem; margin-top: 4px; color: #166534;">Please hand over
+                                    valuable items to the nearest Security Office immediately.</p>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div
+                            style="border-top: 1px solid var(--border); padding-top: 24px; display: flex; justify-content: flex-end; gap: 16px;">
+                            <button type="button" class="secondary-button"
+                                onclick="location.href='/dashboard'">Cancel</button>
+                            <button type="submit" class="primary-button" style="background: var(--success);">Submit
+                                Found Report</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script>checkAuth('user');</script>
+</body>
+
+</html>

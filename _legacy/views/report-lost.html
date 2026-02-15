@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Lost Item - CampusSafe</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+        <!-- 1. Top Navbar -->
+        <nav class="top-navbar">
+            <div class="nav-brand"><i class="fas fa-cube"></i> CampusSafe</div>
+            <button class="secondary-button" onclick="location.href='/dashboard'"><i class="fas fa-times"></i>
+                Exit</button>
+        </nav>
+
+        <!-- 2. Sidebar -->
+        <aside class="sidebar">
+            <a href="/dashboard" class="nav-link"><i class="fas fa-th-large"></i> Dashboard</a>
+            <a href="/browse" class="nav-link"><i class="fas fa-shopping-bag"></i> Browse Marketplace</a>
+            <a href="/report-lost" class="nav-link active"><i class="fas fa-search-minus"></i> Report Lost Item</a>
+            <a href="/report-found" class="nav-link"><i class="fas fa-search-plus"></i> Report Found Item</a>
+        </aside>
+
+        <!-- 3. Main Content -->
+        <main class="main-content page-fade-in">
+            <div class="content-container">
+                <div style="text-align: center; margin-bottom: 32px;">
+                    <h1 style="margin: 0 0 8px 0;">Report a Lost Item</h1>
+                    <p style="margin: 0; color: var(--text-muted);">Provide details to help our AI matching system find
+                        your item.</p>
+                </div>
+
+                <!-- Unified Form Card -->
+                <div class="form-card">
+                    <form
+                        onsubmit="event.preventDefault(); window.showToast('Report Submitted successfully!'); setTimeout(()=> location.href='/dashboard', 1500);">
+
+                        <!-- Item Name -->
+                        <div class="form-group">
+                            <label>Item Name / Description</label>
+                            <input type="text" class="input-field"
+                                placeholder="e.g. Silver MacBook Pro 13-inch with stickers" required>
+                        </div>
+
+                        <!-- 2-Column Grid -->
+                        <div class="form-grid">
+                            <div>
+                                <label>Category</label>
+                                <select class="select-field">
+                                    <option>Electronics</option>
+                                    <option>Clothing & Accessories</option>
+                                    <option>Books / Course Materials</option>
+                                    <option>Keys & ID Cards</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Date Lost</label>
+                                <input type="date" class="input-field">
+                            </div>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="form-group">
+                            <label>Last Seen Location</label>
+                            <input type="text" class="input-field"
+                                placeholder="e.g. 2nd Floor Library, near the quiet zone">
+                        </div>
+
+                        <!-- Additional Details -->
+                        <div class="form-group">
+                            <label>Additional Details (Optional)</label>
+                            <textarea class="input-field"
+                                placeholder="Any distinguishing marks, serial numbers, or contents?"></textarea>
+                        </div>
+
+                        <!-- Actions -->
+                        <div
+                            style="border-top: 1px solid var(--border); padding-top: 24px; display: flex; justify-content: flex-end; gap: 16px;">
+                            <button type="button" class="secondary-button"
+                                onclick="location.href='/dashboard'">Cancel</button>
+                            <button type="submit" class="primary-button">Submit Report</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script>checkAuth('user');</script>
+</body>
+
+</html>

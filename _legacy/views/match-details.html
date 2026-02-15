@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Details - CampusSafe</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- 1. Top Navbar -->
+        <nav class="top-nav">
+            <div class="nav-brand"><i class="fas fa-cube"></i> CampusSafe</div>
+            <div>
+                <button class="btn btn-outline" onclick="location.href='/browse'">Back to Browse</button>
+            </div>
+        </nav>
+
+        <!-- 2. Sidebar -->
+        <aside class="sidebar">
+            <a href="/dashboard" class="nav-link"><i class="fas fa-th-large"></i> Dashboard</a>
+            <a href="/browse" class="nav-link active"><i class="fas fa-shopping-bag"></i> Browse Items</a>
+            <a href="/report-lost" class="nav-link"><i class="fas fa-search-minus"></i> Report Lost</a>
+            <a href="/report-found" class="nav-link"><i class="fas fa-search-plus"></i> Report Found</a>
+        </aside>
+
+        <!-- 3. Main Content -->
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Item Details</h1>
+                <p>Review item information and claim logic.</p>
+            </div>
+
+            <div class="glass-card">
+                <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 2rem;">
+
+                    <!-- Image -->
+                    <div>
+                        <img src="https://placehold.co/400x400?text=Item+Photo"
+                            style="width: 100%; border-radius: var(--radius); border: 1px solid var(--border);">
+                    </div>
+
+                    <!-- Info -->
+                    <div>
+                        <span class="badge badge-found" style="margin-bottom: 1rem;">Found Item</span>
+                        <h2 style="margin-bottom: 0.5rem;">Silver iPhone 13 Pro</h2>
+                        <p style="margin-bottom: 2rem;">Found near the Cafeteria entrance on Table 4. Screen is cracked
+                            slightly.</p>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                            <div style="background: #F8FAFC; padding: 1rem; border-radius: 8px;">
+                                <strong
+                                    style="display: block; font-size: 0.85rem; color: var(--text-muted);">Location</strong>
+                                <span style="font-size: 1.1rem;">Cafeteria</span>
+                            </div>
+                            <div style="background: #F8FAFC; padding: 1rem; border-radius: 8px;">
+                                <strong style="display: block; font-size: 0.85rem; color: var(--text-muted);">Date
+                                    Found</strong>
+                                <span style="font-size: 1.1rem;">Oct 26, 2023</span>
+                            </div>
+                        </div>
+
+                        <div style="border-top: 1px solid var(--border); padding-top: 2rem;">
+                            <h3>Is this yours?</h3>
+                            <p>You will need to verify ownership by providing specific details.</p>
+                            <button class="btn btn-primary"
+                                onclick="window.showToast('Claim Request Sent!', 'success')">Claim This Item</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script>checkAuth('user');</script>
+</body>
+
+</html>

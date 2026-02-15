@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - CampusSafe</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: white;
+        }
+
+        .auth-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .auth-visual {
+            background: linear-gradient(135deg, #22C55E, #16A34A);
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 4rem;
+        }
+
+        .auth-form-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .auth-box {
+            width: 100%;
+            max-width: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-container">
+        <!-- Left: Visual -->
+        <div class="auth-visual">
+            <div>
+                <h1 style="font-size: 3rem; margin-bottom: 1rem;">Join Us</h1>
+                <p style="font-size: 1.25rem; opacity: 0.9;">Create an account to report and track items.</p>
+            </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div class="auth-form-wrapper">
+            <div class="auth-box">
+                <h2 style="margin-bottom: 0.5rem; font-size: 2rem;">Create Account</h2>
+                <p style="margin-bottom: 2rem;">Start bringing items home.</p>
+
+                <form
+                    onsubmit="event.preventDefault(); window.showToast('Account Created!', 'success'); setTimeout(() => window.location.href='/dashboard', 1000);">
+                    <div class="mb-2">
+                        <label style="font-weight: 500; display: block; margin-bottom: 0.5rem;">Full Name</label>
+                        <input type="text" placeholder="John Doe"
+                            style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm);"
+                            required>
+                    </div>
+                    <div class="mb-2">
+                        <label style="font-weight: 500; display: block; margin-bottom: 0.5rem;">Email Address</label>
+                        <input type="email" placeholder="student@university.edu"
+                            style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm);"
+                            required>
+                    </div>
+                    <div class="mb-2">
+                        <label style="font-weight: 500; display: block; margin-bottom: 0.5rem;">Password</label>
+                        <input type="password" placeholder="Create a password"
+                            style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm);"
+                            required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary"
+                        style="width: 100%; margin-top: 1rem; padding: 1rem; background: var(--success-color);">Register</button>
+                </form>
+
+                <p style="text-align: center; margin-top: 2rem;">
+                    Already have an account? <a href="/login" style="color: var(--primary-color); font-weight: 600;">Log
+                        in</a>
+                </p>
+                <div style="text-align: center; margin-top: 1rem;">
+                    <a href="/" style="color: var(--text-muted); font-size: 0.9rem;">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/app.js"></script>
+</body>
+
+</html>

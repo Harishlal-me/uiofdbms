@@ -1,0 +1,57 @@
+[
+    {
+        "id": 1,
+        "type": "lost",
+        "name": "Blue Jansport Backpack",
+        "category": "Bags",
+        "location": "Library 2nd Floor",
+        "date": "2023-10-25",
+        "status": "Pending",
+        "description": "Blue backpack with a math textbook inside.",
+        "image": "https://placehold.co/300x200?text=Blue+Backpack"
+    },
+    {
+        "id": 2,
+        "type": "found",
+        "name": "Silver iPhone 13",
+        "category": "Electronics",
+        "location": "Cafeteria",
+        "date": "2023-10-26",
+        "status": "Verified",
+        "description": "Found on table 5 near the window.",
+        "image": "https://placehold.co/300x200?text=iPhone+13"
+    },
+    {
+        "id": 3,
+        "type": "lost",
+        "name": "Black Hydroflask",
+        "category": "Personal Items",
+        "location": "Gym Locker Room",
+        "date": "2023-10-24",
+        "status": "Resolved",
+        "description": "32oz bottle with stickers.",
+        "image": "https://placehold.co/300x200?text=Water+Bottle"
+    },
+    {
+        "id": 4,
+        "type": "found",
+        "name": "Calculus Textbook",
+        "category": "Books",
+        "location": "Science Hall Room 101",
+        "date": "2023-10-27",
+        "status": "Pending",
+        "description": "Hardcover calculus book, 8th edition.",
+        "image": "https://placehold.co/300x200?text=Calculus+Book"
+    },
+    {
+        "id": 5,
+        "type": "lost",
+        "name": "Wireless Earbuds Case",
+        "category": "Electronics",
+        "location": "Student Union",
+        "date": "2023-10-28",
+        "status": "Pending",
+        "description": "Black charging case for wireless earbuds.",
+        "image": "https://placehold.co/300x200?text=Earbuds+Case"
+    }
+]

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - CampusSafe</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+        <!-- 1. Top Navbar -->
+        <nav class="top-navbar">
+            <div class="nav-brand"><i class="fas fa-cube"></i> CampusSafe</div>
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <div
+                    style="display: flex; align-items: center; gap: 8px; background: #FFFBEB; color: #D97706; padding: 6px 12px; border-radius: 99px; font-weight: 600; font-size: 0.85rem; border: 1px solid #FDE68A;">
+                    <i class="fas fa-star"></i> 40 Points
+                </div>
+                <button class="btn btn-outline" onclick="logout()"
+                    style="padding: 6px 12px; font-size: 0.9rem;">Logout</button>
+            </div>
+        </nav>
+
+        <!-- 2. Sidebar -->
+        <aside class="sidebar">
+            <div class="nav-links">
+                <a href="/dashboard" class="nav-link active"><i class="fas fa-th-large"></i> Dashboard</a>
+                <a href="/browse" class="nav-link"><i class="fas fa-shopping-bag"></i> Browse Marketplace</a>
+                <a href="/report-lost" class="nav-link"><i class="fas fa-search-minus"></i> Report Lost Item</a>
+                <a href="/report-found" class="nav-link"><i class="fas fa-search-plus"></i> Report Found Item</a>
+            </div>
+
+            <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border);">
+                <div
+                    style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 12px;">
+                    Settings</div>
+                <div class="nav-links">
+                    <a href="#" class="nav-link"><i class="fas fa-user"></i> My Profile</a>
+                    <a href="#" class="nav-link"><i class="fas fa-bell"></i> Notifications</a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 3. Main Content -->
+        <main class="main-content">
+            <div class="content-container">
+                <div class="glass-card"
+                    style="display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--primary);">
+                    <div>
+                        <h2 style="margin: 0; font-size: 1.5rem;">Welcome back, Student</h2>
+                        <p style="margin: 4px 0 0 0; color: var(--text-muted);">Here is an overview of your reported
+                            items.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="location.href='/report-lost'"><i class="fas fa-plus"></i>
+                        New Report</button>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
+
+                    <!-- Left: Status Timeline -->
+                    <div>
+                        <div class="section-header" style="margin-bottom: 16px;">
+                            <h3 style="font-size: 1.2rem; margin: 0;">My Reports</h3>
+                        </div>
+
+                        <!-- Item 1 -->
+                        <div class="glass-card">
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                                <div>
+                                    <h4 style="margin: 0; font-size: 1.1rem;">Blue Jansport Backpack</h4>
+                                    <div style="font-size: 0.9rem; color: var(--text-muted);">Lost • Reported 2 days ago
+                                    </div>
+                                </div>
+                                <span class="status-chip chip-found">Ready for Pickup</span>
+                            </div>
+
+                            <!-- Stepper -->
+                            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem;">
+                                <div
+                                    style="display: flex; align-items: center; gap: 6px; color: var(--success-text); font-weight: 600;">
+                                    <i class="fas fa-check-circle"></i> Reported
+                                </div>
+                                <div style="width: 30px; height: 2px; background: var(--success-text);"></div>
+                                <div
+                                    style="display: flex; align-items: center; gap: 6px; color: var(--success-text); font-weight: 600;">
+                                    <i class="fas fa-check-circle"></i> Matched
+                                </div>
+                                <div style="width: 30px; height: 2px; background: var(--success-text);"></div>
+                                <div
+                                    style="display: flex; align-items: center; gap: 6px; color: var(--text-main); font-weight: 600;">
+                                    <i class="fas fa-map-marker-alt"></i> Security Office
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="glass-card">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <div>
+                                    <h4 style="margin: 0; font-size: 1.1rem;">Black Umbrella</h4>
+                                    <div style="font-size: 0.9rem; color: var(--text-muted);">Found • Reported 4 hours
+                                        ago</div>
+                                </div>
+                                <span class="status-chip chip-pending">Pending Review</span>
+                            </div>
+                            <p style="margin: 12px 0 0 0; font-size: 0.9rem; color: var(--text-muted);">
+                                <i class="fas fa-info-circle"></i> Admins are currently reviewing your submission for
+                                matches.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Right: Quick Actions -->
+                    <div>
+                        <div class="glass-card"
+                            style="background: linear-gradient(135deg, #1E293B, #0F172A); color: white;">
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                <i class="fas fa-shield-alt" style="font-size: 1.5rem; color: #60A5FA;"></i>
+                                <div style="font-weight: 600;">Safety Tip</div>
+                            </div>
+                            <p style="font-size: 0.9rem; margin: 0; color: #94A3B8; line-height: 1.5;">Always identify
+                                yourself with a valid Student ID when picking up lost items from the Security Office.
+                            </p>
+                        </div>
+
+                        <div class="glass-card">
+                            <div style="font-weight: 600; margin-bottom: 12px;">Marketplace Activity</div>
+                            <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">
+                                <i class="fas fa-arrow-up" style="color: var(--success-text);"></i> 12 New Found Items
+                                today
+                            </div>
+                            <button class="btn btn-outline" style="width: 100%;"
+                                onclick="location.href='/browse'">Browse All</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script>
+        checkAuth('user');
+        function logout() { localStorage.clear(); location.href = '/login'; }
+    </script>
+</body>
+
+</html>

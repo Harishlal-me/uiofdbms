@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - CampusSafe</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+        <!-- Navbar -->
+        <nav class="top-navbar">
+            <div class="nav-brand"><i class="fas fa-cube"></i> CampusSafe <span class="status-badge badge-blue"
+                    style="margin-left: 12px; font-size: 0.65rem;">ADMIN</span></div>
+            <div style="display: flex; gap: 16px; align-items: center;">
+                <div style="text-align: right; line-height: 1.2;">
+                    <div style="font-weight: 600; font-size: 0.9rem;">Admin User</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">Security Dept</div>
+                </div>
+                <button class="btn btn-secondary" onclick="logout()" style="height: 36px; padding: 0 12px;"><i
+                        class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </nav>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div
+                style="padding: 12px 0; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">
+                Main Menu</div>
+            <a href="#" class="nav-item active admin-nav-link" data-target="matches"><i class="fas fa-bolt"
+                    style="width: 20px;"></i> AI Matches</a>
+            <a href="#" class="nav-item admin-nav-link" data-target="lost"><i class="fas fa-box"
+                    style="width: 20px;"></i> Lost Items</a>
+            <a href="#" class="nav-item admin-nav-link" data-target="found"><i class="fas fa-check-circle"
+                    style="width: 20px;"></i> Found Items</a>
+
+            <div
+                style="padding: 24px 0 12px 0; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">
+                Management</div>
+            <a href="#" class="nav-item admin-nav-link" data-target="users"><i class="fas fa-users"
+                    style="width: 20px;"></i> User Directory</a>
+            <a href="#" class="nav-item"><i class="fas fa-cog" style="width: 20px;"></i> Settings</a>
+        </aside>
+
+        <!-- Content Shell -->
+        <main class="main-content">
+            <div class="content-container" id="app-content">
+                <!-- Injected via app.js -->
+            </div>
+        </main>
+    </div>
+
+    <!-- VERIFICATION MODAL (SaaS High-Fidelity) -->
+    <div id="verify-modal" class="modal-overlay">
+        <div class="modal-window">
+
+            <!-- Modal Header -->
+            <div
+                style="padding: 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: #F8FAFC;">
+                <div>
+                    <h2 style="font-size: 1.25rem; margin-bottom: 4px;">Verify Match #2938</h2>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div
+                            style="width: 120px; height: 8px; background: #E2E8F0; border-radius: 99px; overflow: hidden;">
+                            <div style="width: 94%; height: 100%; background: var(--success);"></div>
+                        </div>
+                        <span style="font-size: 0.85rem; font-weight: 600; color: var(--success);">94% Match
+                            Confidence</span>
+                    </div>
+                </div>
+                <button class="btn btn-secondary" onclick="closeModal('verify-modal')"
+                    style="border: none; background: transparent;"><i class="fas fa-times fa-lg"></i></button>
+            </div>
+
+            <!-- Modal Body (Scrollable) -->
+            <div style="padding: 32px; overflow-y: auto; background: white; flex: 1;">
+
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 32px;">
+
+                    <!-- Left: Comparison -->
+                    <div>
+                        <h4 class="mb-4">Item Comparison</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+
+                            <!-- Lost Card -->
+                            <div class="card" style="border-top: 4px solid var(--danger);">
+                                <div class="status-badge badge-red mb-2">Lost Report</div>
+                                <h3 class="mb-2">Silver MacBook Air</h3>
+                                <div class="text-muted" style="font-size: 0.9rem; margin-bottom: 16px;">
+                                    <i class="fas fa-map-marker-alt"></i> Library, 2nd Floor<br>
+                                    <i class="fas fa-calendar"></i> Oct 25, 2023
+                                </div>
+                                <img src="https://placehold.co/400x300?text=Lost+Photo"
+                                    style="width: 100%; border-radius: 8px; margin-bottom: 12px;">
+                                <p style="font-size: 0.9rem;">"Has a 'NASA' sticker on the lid. Small dent on corner."
+                                </p>
+                            </div>
+
+                            <!-- Found Card -->
+                            <div class="card" style="border-top: 4px solid var(--success);">
+                                <div class="status-badge badge-green mb-2">Found Report</div>
+                                <h3 class="mb-2">Apple Laptop</h3>
+                                <div class="text-muted" style="font-size: 0.9rem; margin-bottom: 16px;">
+                                    <i class="fas fa-map-marker-alt"></i> Cafeteria<br>
+                                    <i class="fas fa-calendar"></i> Oct 26, 2023
+                                </div>
+                                <img src="https://placehold.co/400x300?text=Found+Photo"
+                                    style="width: 100%; border-radius: 8px; margin-bottom: 12px;">
+                                <p style="font-size: 0.9rem;">"Found near main entrance. Silver with sticker residue."
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Right: AI Logic -->
+                    <div>
+                        <h4 class="mb-4">AI Analysis</h4>
+                        <div class="card" style="background: #F8FAFC; border: none;">
+                            <ul
+                                style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 16px;">
+                                <li style="display: flex; gap: 12px;">
+                                    <div style="color: var(--success);"><i class="fas fa-check-circle"></i></div>
+                                    <div style="font-size: 0.9rem;"><strong>Image Match:</strong> Both items identified
+                                        as laptops with silver finish.</div>
+                                </li>
+                                <li style="display: flex; gap: 12px;">
+                                    <div style="color: var(--success);"><i class="fas fa-check-circle"></i></div>
+                                    <div style="font-size: 0.9rem;"><strong>Location:</strong> Sites are within 200m
+                                        radius on campus map.</div>
+                                </li>
+                                <li style="display: flex; gap: 12px;">
+                                    <div style="color: var(--warning);"><i class="fas fa-clock"></i></div>
+                                    <div style="font-size: 0.9rem;"><strong>Timeframe:</strong> Found item reported 12
+                                        hours after loss.</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div
+                style="padding: 24px; border-top: 1px solid var(--border); background: #F8FAFC; display: flex; justify-content: flex-end; align-items: center; gap: 16px;">
+                <div style="margin-right: auto; display: flex; align-items: center; gap: 12px;">
+                    <label style="font-weight: 600; font-size: 0.9rem;">Assign Storage:</label>
+                    <select class="select-field" style="height: 40px; width: 200px;">
+                        <option>Security Office A</option>
+                        <option>Main Front Desk</option>
+                    </select>
+                </div>
+                <button class="btn btn-secondary" onclick="closeModal('verify-modal')">Cancel</button>
+                <button class="btn btn-danger">Reject Match</button>
+                <button class="btn btn-primary" onclick="confirmApproval()">Approve & Notify Owner</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script>
+        checkAuth('admin');
+        function logout() { localStorage.clear(); location.href = '/login'; }
+        function confirmApproval() {
+            closeModal('verify-modal');
+            window.showToast('Match Approved! Notification emails sent.', 'success');
+        }
+    </script>
+</body>
+
+</html>
