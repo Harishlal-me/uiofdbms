@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { Loader2 } from 'lucide-react';
+import { LoaderCircle } from 'lucide-react';
 
 export function Card({ children, className, ...props }) {
     return (
@@ -27,7 +27,7 @@ export function Button({ variant = 'primary', size = 'md', isLoading, children, 
 
     return (
         <button className={clsx(base, variants[variant], sizes[size], className)} disabled={isLoading} {...props}>
-            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isLoading && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
             {children}
         </button>
     );

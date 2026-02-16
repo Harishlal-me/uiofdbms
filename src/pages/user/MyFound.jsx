@@ -1,5 +1,5 @@
 import { Card, Badge, Button } from '../../components/ui/Primitives';
-import { MapPin, Calendar, Award, CheckCircle } from 'lucide-react';
+import { MapPin, Calendar, Award, CircleCheck } from 'lucide-react';
 
 export default function MyFoundItems() {
     return (
@@ -54,7 +54,7 @@ export default function MyFoundItems() {
                         </div>
                         <div className="text-right">
                             <div className="inline-flex items-center gap-1 px-2 py-1 bg-slate-100 text-slate-500 rounded-full text-xs font-bold">
-                                <CheckCircle size={12} /> Pending Verification
+                                <CircleCheck size={12} /> Pending Verification
                             </div>
                         </div>
                     </div>

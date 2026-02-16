@@ -1,4 +1,4 @@
-import { Bell, Check, Info, AlertTriangle, CheckCircle, Zap } from 'lucide-react';
+import { Bell, Check, Info, TriangleAlert, CircleCheck, Zap } from 'lucide-react';
 import { useNotifications } from '../../context/NotificationContext';
 import { useRef, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -30,8 +30,8 @@ export default function NotificationBell() {
 
     const getIcon = (type) => {
         switch (type) {
-            case 'success': return <CheckCircle size={16} className="text-emerald-500" />;
-            case 'warning': return <AlertTriangle size={16} className="text-amber-500" />;
+            case 'success': return <CircleCheck size={16} className="text-emerald-500" />;
+            case 'warning': return <TriangleAlert size={16} className="text-amber-500" />;
             case 'alert': return <Bell size={16} className="text-indigo-500" />;
             case 'credit': return <Zap size={16} className="text-yellow-500" />;
             default: return <Info size={16} className="text-slate-400" />;

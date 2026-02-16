@@ -1,76 +1,79 @@
 import { useState, useEffect } from 'react';
 import { Card, Button, Badge } from '../../components/ui/Primitives';
 import {
-    CheckCircle, XCircle, AlertTriangle, MapPin, Calendar,
-    BrainCircuit, Box, User, ArrowRight, FileText, Activity,
+    CircleCheck, CircleX, TriangleAlert, MapPin, Calendar,
+    BrainCircuit, Package, User, ArrowRight, FileText, Activity,
     Clock, Search, Filter, Download, Database, Shield,
     BarChart3, RefreshCw, Zap
 } from 'lucide-react';
+
+import api from '../../services/api';
 
 export default function AdminDashboard() {
     const [selectedMatch, setSelectedMatch] = useState(null);
     const [currentTime, setCurrentTime] = useState(new Date());
 
-    // Live Clock Effect
+    // State for Real Data
+    const [stats, setStats] = useState({
+        pendingLost: 0, pendingFound: 0, casesResolved: 0,
+        activeStorage: 0, totalUsers: 0, pendingMatches: 0
+    });
+    const [activity, setActivity] = useState([]);
+    const [storageLocs, setStorageLocs] = useState([]);
+    const [matches, setMatches] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    // Live Clock
     useEffect(() => {
         const timer = setInterval(() => setCurrentTime(new Date()), 1000);
         return () => clearInterval(timer);
     }, []);
 
-    // --- MOCK DATA ---
+    // Fetch Data
+    useEffect(() => {
+        fetchDashboardData();
+    }, []);
+
+    const fetchDashboardData = async () => {
+        try {
+            const [statsRes, storageRes, matchesRes] = await Promise.all([
+                api.get('/dashboard/stats'),
+                api.get('/storage'),
+                api.get('/matches')
+            ]);
+
+            setStats(statsRes.data.kpi);
+            setActivity(statsRes.data.activity);
+            setStorageLocs(storageRes.data);
+            setMatches(matchesRes.data.slice(0, 3)); // Top 3 pending
+            setLoading(false);
+        } catch (error) {
+            console.error("Dashboard Load Error:", error);
+            setLoading(false);
+        }
+    };
 
     const kpiStats = [
-        { label: 'Pending Verifications', value: '14', change: '+2', icon: BrainCircuit, color: 'text-indigo-600', bg: 'bg-indigo-50' },
-        { label: 'Matches Today', value: '8', change: '+15%', icon: Zap, color: 'text-amber-600', bg: 'bg-amber-50' },
-        { label: 'Resolved Cases', value: '1,240', change: '+5%', icon: CheckCircle, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-        { label: 'Active Storage', value: '45', change: '-2%', icon: Box, color: 'text-blue-600', bg: 'bg-blue-50' },
-        { label: 'Damage Flags', value: '3', change: '0%', icon: AlertTriangle, color: 'text-red-600', bg: 'bg-red-50' },
-        { label: 'Total Users', value: '8,450', change: '+120', icon: User, color: 'text-slate-600', bg: 'bg-slate-50' },
+        { label: 'Pending Verifications', value: stats.pendingMatches, change: '0%', icon: BrainCircuit, color: 'text-indigo-600', bg: 'bg-indigo-50' },
+        { label: 'Pending Lost', value: stats.pendingLost, change: '0%', icon: TriangleAlert, color: 'text-amber-600', bg: 'bg-amber-50' },
+        { label: 'Resolved Cases', value: stats.casesResolved, change: '0%', icon: CircleCheck, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+        { label: 'Active Storage', value: stats.activeStorage, change: '0%', icon: Package, color: 'text-blue-600', bg: 'bg-blue-50' },
+        { label: 'Total Users', value: stats.totalUsers, change: '0%', icon: User, color: 'text-slate-600', bg: 'bg-slate-50' },
     ];
 
-    const liveActivity = [
-        { id: 1, text: 'Match #2940 Detected', time: 'Just now', status: 'pending', conf: 92 },
-        { id: 2, text: 'Item #8821 Verified', time: '5 mins ago', status: 'verified', conf: 98 },
-        { id: 3, text: 'Match #2935 Rejected', time: '12 mins ago', status: 'rejected', conf: 45 },
-        { id: 4, text: 'New Lost Report #8825', time: '20 mins ago', status: 'info', conf: 0 },
-        { id: 5, text: 'Storage Alert: Library', time: '1 hr ago', status: 'warning', conf: 0 },
-    ];
-
-    const storageStats = [
-        { name: 'Security Main Office', used: 45, capacity: 50, status: 'Critical' },
-        { name: 'Library Help Desk', used: 12, capacity: 40, status: 'Good' },
-        { name: 'Hostel Office (A)', used: 28, capacity: 35, status: 'Warning' },
-        { name: 'Student Center', used: 5, capacity: 100, status: 'Good' },
-    ];
-
-    const matchQueue = [
-        {
-            id: 2938,
-            confidence: 94,
-            lost: { name: 'Silver MacBook Air', loc: 'Library 2nd Floor', date: 'Oct 25', img: 'https://placehold.co/400x300/fee2e2/991b1b?text=Lost+MacBook', desc: 'Has NASA sticker on lid. Serial #A123.', user: 'Alex (Student)' },
-            found: { name: 'Apple Laptop', loc: 'Cafeteria', date: 'Oct 26', img: 'https://placehold.co/400x300/dcfce7/166534?text=Found+Laptop', desc: 'Silver, found on table. Has sticker.', user: 'Guard John', storage_kept: 'Security Main Office' },
-            reasons: [
-                { text: 'High Text Similarity ("MacBook" ≈ "Apple Laptop")', score: 92 },
-                { text: 'Description Match ("Sticker")', score: 98 },
-                { text: 'Time Proximity (Found 1 day after Lost)', score: 95 }
-            ]
-        },
-        {
-            id: 2939,
-            confidence: 88,
-            lost: { name: 'Blue Backpack', loc: 'Gym', date: 'Oct 26', img: 'https://placehold.co/400x300/fee2e2/991b1b?text=Lost+Bag', desc: 'Jansport brand.', user: 'Sarah (Staff)' },
-            found: { name: 'Blue Bag', loc: 'Locker Room', date: 'Oct 26', img: 'https://placehold.co/400x300/dcfce7/166534?text=Found+Bag', desc: 'Contains gym clothes.', user: 'Student Mike', storage_kept: 'Hostel Office (Block A)' },
-            reasons: [
-                { text: 'Category Match (Bags)', score: 100 },
-                { text: 'Location Proximity (Gym <-> Locker Room)', score: 90 },
-                { text: 'Color Match (Blue)', score: 85 }
-            ]
+    const handleApprove = async () => {
+        try {
+            await api.put(`/matches/${selectedMatch.id}/verify`, {
+                admin_id: 9, // TOD: Get from AuthContext
+                action: 'approve',
+                notes: 'Verified via Dashboard'
+            });
+            alert("Match Verified!");
+            setSelectedMatch(null);
+            fetchDashboardData(); // Refresh
+        } catch (error) {
+            alert("Error: " + error.message);
         }
-    ];
-
-    const handleApprove = () => {
-        alert("Match Verified! +50 CS Credits awarded to Finder. Owner notified.");
-        setSelectedMatch(null);
     };
 
     // --- RENDER HELPERS ---
@@ -160,25 +163,16 @@ export default function AdminDashboard() {
                             </button>
                         </div>
                         <div className="divide-y divide-slate-50">
-                            {liveActivity.map((item) => (
-                                <div key={item.id} className="px-6 py-3 flex items-center justify-between hover:bg-slate-50 transition-colors">
+                            {activity.length === 0 ? (
+                                <div className="p-6 text-center text-slate-500 text-sm">No recent activity</div>
+                            ) : activity.map((item) => (
+                                <div key={item.log_id} className="px-6 py-3 flex items-center justify-between hover:bg-slate-50 transition-colors">
                                     <div className="flex items-center gap-3">
-                                        <div className={`w-1.5 h-1.5 rounded-full ${item.status === 'verified' ? 'bg-emerald-500' : item.status === 'pending' ? 'bg-indigo-500' : item.status === 'info' ? 'bg-blue-400' : 'bg-red-400'}`}></div>
+                                        <div className={`w-1.5 h-1.5 rounded-full ${item.action === 'INSERT' ? 'bg-emerald-500' : 'bg-indigo-500'}`}></div>
                                         <div>
-                                            <div className="text-sm font-medium text-slate-700">{item.text}</div>
-                                            <div className="text-[10px] text-slate-400">{item.time}</div>
+                                            <div className="text-sm font-medium text-slate-700">{item.action} on {item.table_name}</div>
+                                            <div className="text-[10px] text-slate-400">{new Date(item.changed_at).toLocaleString()}</div>
                                         </div>
-                                    </div>
-                                    <div className="flex items-center gap-3">
-                                        {item.conf > 0 && (
-                                            <div className="flex items-center gap-1.5">
-                                                <div className="h-1.5 w-16 bg-slate-100 rounded-full overflow-hidden">
-                                                    <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${item.conf}%` }}></div>
-                                                </div>
-                                                <span className="text-xs font-bold text-slate-600">{item.conf}%</span>
-                                            </div>
-                                        )}
-                                        <StatusBadge status={item.status} />
                                     </div>
                                 </div>
                             ))}
@@ -199,7 +193,9 @@ export default function AdminDashboard() {
 
                     {/* Queue List */}
                     <div className="space-y-4">
-                        {matchQueue.map(match => (
+                        {matches.length === 0 ? (
+                            <div className="p-8 text-center border border-dashed border-slate-200 rounded-xl text-slate-500">No pending matches</div>
+                        ) : matches.map(match => (
                             <div key={match.id} className="relative group bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg hover:border-indigo-200 transition-all duration-200 overflow-hidden">
                                 <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
 
@@ -226,22 +222,22 @@ export default function AdminDashboard() {
                                             <h3 className="text-base font-bold text-slate-900 truncate">
                                                 ID #{match.id}: {match.lost.name} <span className="text-slate-300 mx-2">|</span> {match.found.name}
                                             </h3>
-                                            <span className="text-xs text-slate-400 font-mono">{match.lost.date}</span>
+                                            <span className="text-xs text-slate-400 font-mono">{new Date(match.lost.date).toLocaleDateString()}</span>
                                         </div>
 
                                         <div className="space-y-1 mb-3">
                                             {match.reasons.slice(0, 2).map((r, i) => (
                                                 <div key={i} className="flex items-center gap-2 text-xs text-slate-600">
-                                                    <CheckCircle size={12} className="text-indigo-500" />
+                                                    <CircleCheck size={12} className="text-indigo-500" />
                                                     {r.text}
                                                 </div>
                                             ))}
                                         </div>
 
                                         <div className="flex items-center gap-4 text-xs text-slate-500 mt-3 pt-3 border-t border-slate-50">
-                                            <span className="flex items-center gap-1"><MapPin size={12} /> {match.lost.loc}</span>
+                                            <span className="flex items-center gap-1"><MapPin size={12} /> {match.lost.desc}</span>
                                             <ArrowRight size={12} className="text-slate-300" />
-                                            <span className="flex items-center gap-1"><MapPin size={12} /> {match.found.loc}</span>
+                                            <span className="flex items-center gap-1"><MapPin size={12} /> {match.found.desc}</span>
                                         </div>
                                     </div>
 
@@ -265,35 +261,37 @@ export default function AdminDashboard() {
                             <Database size={18} /> Export Data
                         </Button>
                         <Button variant="secondary" className="h-auto py-3 flex-col gap-2 text-xs hover:border-indigo-200 hover:text-indigo-700">
-                            <Box size={18} /> Add Storage
+                            <Package size={18} /> Add Storage
                         </Button>
                     </div>
 
                     {/* 4. STORAGE OVERVIEW WIDGET */}
                     <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
                         <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
-                            <Box size={18} className="text-indigo-600" /> Storage Overview
+                            <Package size={18} className="text-indigo-600" /> Storage Overview
                         </h3>
                         <div className="space-y-4">
                             <div className="space-y-5">
-                                {storageStats.map((loc, i) => {
-                                    const percentage = Math.round((loc.used / loc.capacity) * 100);
-                                    let color = 'bg-emerald-500';
-                                    if (percentage > 85) color = 'bg-red-500';
-                                    else if (percentage > 70) color = 'bg-amber-500';
+                                <div className="space-y-5">
+                                    {storageLocs.map((loc, i) => {
+                                        const percentage = Math.round((loc.current_count / loc.capacity) * 100);
+                                        let color = 'bg-emerald-500';
+                                        if (percentage > 85) color = 'bg-red-500';
+                                        else if (percentage > 70) color = 'bg-amber-500';
 
-                                    return (
-                                        <div key={i}>
-                                            <div className="flex justify-between text-sm mb-1">
-                                                <span className="font-medium text-slate-700">{loc.name}</span>
-                                                <span className="text-slate-500 text-xs">{loc.used}/{loc.capacity} items</span>
+                                        return (
+                                            <div key={i}>
+                                                <div className="flex justify-between text-sm mb-1">
+                                                    <span className="font-medium text-slate-700">{loc.room_name}</span>
+                                                    <span className="text-slate-500 text-xs">{loc.current_count}/{loc.capacity} items</span>
+                                                </div>
+                                                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                                                    <div className={`h-full ${color} transition-all duration-500`} style={{ width: `${percentage}%` }}></div>
+                                                </div>
                                             </div>
-                                            <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
-                                                <div className={`h-full ${color} transition-all duration-500`} style={{ width: `${percentage}%` }}></div>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
+                                        );
+                                    })}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -345,7 +343,7 @@ export default function AdminDashboard() {
                                 <p className="text-xs text-slate-500">Review textual and metadata similarities.</p>
                             </div>
                             <button onClick={() => setSelectedMatch(null)} className="p-2 hover:bg-slate-100 rounded-full text-slate-500">
-                                <XCircle size={24} />
+                                <CircleX size={24} />
                             </button>
                         </div>
 
@@ -409,7 +407,7 @@ export default function AdminDashboard() {
                                             <div className="space-y-2">
                                                 {selectedMatch.reasons.map((r, i) => (
                                                     <div key={i} className="flex gap-2 text-xs text-indigo-100">
-                                                        <CheckCircle size={12} className="shrink-0 mt-0.5" />
+                                                        <CircleCheck size={12} className="shrink-0 mt-0.5" />
                                                         <span>{r.text}</span>
                                                     </div>
                                                 ))}
@@ -422,7 +420,7 @@ export default function AdminDashboard() {
                                         <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 mb-4">
                                             <div className="text-xs text-slate-500 uppercase mb-1">Item currently at</div>
                                             <div className="font-bold text-lg text-indigo-700 flex items-center gap-2">
-                                                <Box size={18} /> {selectedMatch.found.storage_kept}
+                                                <Package size={18} /> {selectedMatch.found.storage_kept}
                                             </div>
                                         </div>
                                         <div className="grid grid-cols-2 gap-3">

@@ -1,26 +1,40 @@
+import { useState, useEffect } from 'react';
 import { Card, Badge, Button } from '../../components/ui/Primitives';
-import { FileText, Shield, User, Database, LogIn, Search } from 'lucide-react';
+import { FileText, Shield, User, Database, LogIn, Search, LoaderCircle } from 'lucide-react';
+import api from '../../services/api';
 
 export default function AuditLogs() {
-    const logs = [
-        { id: 'LOG-9921', time: '10:42:15 AM', user: 'Admin', role: 'Super Admin', action: 'Verified Match #2938', type: 'System', ip: '192.168.1.1' },
-        { id: 'LOG-9920', time: '10:30:00 AM', user: 'System', role: 'Bot', action: 'Daily Database Backup Completed', type: 'Maintenance', ip: 'localhost' },
-        { id: 'LOG-9919', time: '09:15:22 AM', user: 'Student_01', role: 'User', action: 'Failed Login Attempt (Password)', type: 'Auth', ip: '10.0.0.45' },
-        { id: 'LOG-9918', time: '09:12:10 AM', user: 'Guard_John', role: 'Admin', action: 'Updated Storage Location: Library', type: 'Data', ip: '192.168.1.12' },
-        { id: 'LOG-9917', time: '08:45:00 AM', user: 'Admin', role: 'Super Admin', action: 'Exported Monthly Report.csv', type: 'System', ip: '192.168.1.1' },
-        { id: 'LOG-9916', time: 'Yesterday', user: 'System', role: 'Bot', action: 'Cleared Temporary Cache', type: 'Maintenance', ip: 'localhost' },
-        { id: 'LOG-9915', time: 'Yesterday', user: 'NewUser_99', role: 'User', action: 'Account Created', type: 'Auth', ip: '10.0.0.88' },
-        { id: 'LOG-9914', time: 'Yesterday', user: 'Admin', role: 'Super Admin', action: 'Rejected Claim #CLM-004', type: 'System', ip: '192.168.1.1' },
-    ];
+    const [logs, setLogs] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchLogs = async () => {
+            try {
+                const res = await api.get('/audit-logs');
+                if (Array.isArray(res.data)) {
+                    setLogs(res.data);
+                } else {
+                    console.error("Audit Logs API response is not an array:", res.data);
+                    setLogs([]);
+                }
+            } catch (error) {
+                console.error("Error fetching logs:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchLogs();
+    }, []);
 
     const getTypeIcon = (type) => {
-        switch (type) {
-            case 'Auth': return <LogIn size={14} className="text-amber-500" />;
-            case 'System': return <Shield size={14} className="text-indigo-500" />;
-            case 'Data': return <Database size={14} className="text-emerald-500" />;
-            case 'Maintenance': return <FileText size={14} className="text-slate-500" />;
-            default: return <FileText size={14} />;
-        }
+        // Simple mapping based on table name or action if type is not explicit in DB
+        // The DB `table_name` can serve as type proxy
+        if (!type) return <FileText size={14} />;
+        const t = String(type); // Ensure string
+        if (t.includes('User')) return <User size={14} className="text-indigo-500" />;
+        if (t.includes('Report')) return <FileText size={14} className="text-emerald-500" />;
+        if (t.includes('Match')) return <Shield size={14} className="text-amber-500" />;
+        return <Database size={14} className="text-slate-500" />;
     };
 
     return (
@@ -40,31 +54,57 @@ export default function AuditLogs() {
                             <th className="px-6 py-4">Timestamp</th>
                             <th className="px-6 py-4">User</th>
                             <th className="px-6 py-4">Action</th>
-                            <th className="px-6 py-4">Type</th>
-                            <th className="px-6 py-4 font-mono">IP Address</th>
+                            <th className="px-6 py-4">Context</th>
+                            <th className="px-6 py-4 font-mono">ID</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-50">
-                        {logs.map((log) => (
-                            <tr key={log.id} className="hover:bg-slate-50 group transition-colors cursor-default">
-                                <td className="px-6 py-3 font-mono text-xs text-slate-500">{log.time}</td>
-                                <td className="px-6 py-3">
+                        {loading ? (
+                            <tr><td colSpan="5" className="p-6 text-center">Loading logs...</td></tr>
+                        ) : logs.length === 0 ? (
+                            <tr><td colSpan="5" className="p-6 text-center">No audit logs found.</td></tr>
+                        ) : logs.map((log) => (
+                            <tr key={log.log_id} className="hover:bg-slate-50 group transition-colors cursor-default">
+                                <td className="px-6 py-4 font-medium text-slate-900">
+                                    {new Date(log.changed_at).toLocaleString()}
+                                </td>
+                                <td className="px-6 py-4">
                                     <div className="flex items-center gap-2">
-                                        <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-600">
-                                            {log.user[0].toUpperCase()}
+                                        <div className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-bold text-indigo-700">
+                                            {log.user_name ? log.user_name.charAt(0).toUpperCase() : '?'}
                                         </div>
-                                        <span className="font-medium text-slate-900">{log.user}</span>
-                                        <span className="text-[10px] bg-slate-100 px-1.5 py-0.5 rounded text-slate-500">{log.role}</span>
+                                        <span className="text-slate-700">{log.user_name || 'System Auto'}</span>
+                                        {log.user_role && <Badge variant="neutral" className="text-[10px]">{log.user_role}</Badge>}
                                     </div>
                                 </td>
-                                <td className="px-6 py-3 font-medium text-slate-700">{log.action}</td>
-                                <td className="px-6 py-3">
-                                    <div className="flex items-center gap-2 border border-slate-100 bg-white px-2 py-1 rounded w-fit">
-                                        {getTypeIcon(log.type)}
-                                        <span className="text-xs">{log.type}</span>
+                                <td className="px-6 py-4">
+                                    <Badge variant={
+                                        log.action === 'INSERT' ? 'success' :
+                                            log.action === 'UPDATE' ? 'warning' :
+                                                log.action === 'DELETE' ? 'danger' : 'neutral'
+                                    }>
+                                        {log.action === 'INSERT' ? 'Created New' :
+                                            log.action === 'UPDATE' ? 'Updated' :
+                                                log.action === 'DELETE' ? 'Deleted' : log.action}
+                                    </Badge>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <div className="flex items-center gap-2 text-slate-600">
+                                        {getTypeIcon(log.table_name)}
+                                        <span className="capitalize">
+                                            {log.table_name === 'LostReports' ? 'Lost Item Report' :
+                                                log.table_name === 'FoundReports' ? 'Found Item Report' :
+                                                    log.table_name === 'Matches' ? 'Match Record' :
+                                                        log.table_name === 'Users' ? 'User Profile' :
+                                                            log.table_name === 'ItemClaims' ? 'Item Claim' :
+                                                                log.table_name === 'StorageLocations' ? 'Storage Location' :
+                                                                    log.table_name}
+                                        </span>
                                     </div>
                                 </td>
-                                <td className="px-6 py-3 text-xs text-slate-400 font-mono">{log.ip}</td>
+                                <td className="px-6 py-4 text-slate-400 font-mono text-xs">
+                                    #{log.record_id}
+                                </td>
                             </tr>
                         ))}
                     </tbody>

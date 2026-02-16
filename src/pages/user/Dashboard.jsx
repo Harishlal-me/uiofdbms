@@ -1,16 +1,45 @@
 import { useNavigate } from 'react-router-dom';
 import { Card, Button, Badge } from '../../components/ui/Primitives';
-import { Plus, Search, Award, Bell, CheckCircle, Shield } from 'lucide-react';
+import { Plus, Search, Award, Bell, CircleCheck, Shield } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import api from '../../services/api';
+import { useAuth } from '../../context/AuthContext';
 
 export default function Dashboard() {
-    const navigate = useNavigate();
+    const { user } = useAuth(); // Get user from context
+    const [stats, setStats] = useState({
+        pendingLost: 0,
+        pendingFound: 0,
+        casesResolved: 0
+    });
+    const [credits, setCredits] = useState(user?.cs_credits || 0);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Parallel fetch: Stats and User Profile (for updated credits)
+                const [statsRes, userRes] = await Promise.all([
+                    api.get('/dashboard/stats'),
+                    user?.id ? api.get(`/users/profile/${user.id}`) : Promise.resolve({ data: {} })
+                ]);
+
+                setStats(statsRes.data.kpi || statsRes.data); // Handle structure variation
+                if (userRes.data && userRes.data.cs_credits !== undefined) {
+                    setCredits(userRes.data.cs_credits);
+                }
+            } catch (error) {
+                console.error("Failed to fetch dashboard data", error);
+            }
+        };
+        fetchData();
+    }, [user?.id]);
 
     return (
         <div className="space-y-8">
             {/* Welcome Section */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-900">Welcome back, Student</h1>
+                    <h1 className="text-2xl font-bold text-slate-900">Welcome back, {user?.name || 'Student'}</h1>
                     <p className="text-slate-500">Here's what's happening with your items.</p>
                 </div>
                 <div className="flex gap-3">
@@ -25,22 +54,28 @@ export default function Dashboard() {
 
             {/* Stats Overview */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card className="p-6 flex items-center gap-4 border-l-4 border-l-indigo-500">
+                <Card
+                    className="p-6 flex items-center gap-4 border-l-4 border-l-indigo-500 cursor-pointer hover:shadow-md transition-shadow"
+                    onClick={() => navigate('/reported-lost')}
+                >
                     <div className="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center">
                         <Search size={24} />
                     </div>
                     <div>
-                        <div className="text-2xl font-bold text-slate-900">2</div>
+                        <div className="text-2xl font-bold text-slate-900">{stats.pendingLost}</div>
                         <div className="text-sm text-slate-500">Active Lost Reports</div>
                     </div>
                 </Card>
-                <Card className="p-6 flex items-center gap-4 border-l-4 border-l-emerald-500">
+                <Card
+                    className="p-6 flex items-center gap-4 border-l-4 border-l-emerald-500 cursor-pointer hover:shadow-md transition-shadow"
+                    onClick={() => navigate('/reported-found')}
+                >
                     <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center">
-                        <CheckCircle size={24} />
+                        <CircleCheck size={24} />
                     </div>
                     <div>
-                        <div className="text-2xl font-bold text-slate-900">12</div>
-                        <div className="text-sm text-slate-500">Items Returned</div>
+                        <div className="text-2xl font-bold text-slate-900">{stats.pendingFound}</div>
+                        <div className="text-sm text-slate-500">Active Found Reports</div>
                     </div>
                 </Card>
                 <Card className="p-6 flex items-center gap-4 border-l-4 border-l-amber-500 cursor-pointer hover:shadow-md transition-shadow" onClick={() => navigate('/cs-credits')}>
@@ -48,7 +83,7 @@ export default function Dashboard() {
                         <Award size={24} />
                     </div>
                     <div>
-                        <div className="text-2xl font-bold text-slate-900">450</div>
+                        <div className="text-2xl font-bold text-slate-900">{credits}</div>
                         <div className="text-sm text-slate-500">CS Credits Earned</div>
                     </div>
                 </Card>

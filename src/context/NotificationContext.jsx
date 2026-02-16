@@ -1,33 +1,55 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
+import api from '../services/api';
 
 const NotificationContext = createContext();
 
 export function NotificationProvider({ children }) {
-    const [notifications, setNotifications] = useState([
-        { id: 1, text: "New Lost Item Report: Silver MacBook", time: "2 mins ago", read: false, type: "alert" },
-        { id: 2, text: "Match Verified: Blue Bag", time: "1 hour ago", read: false, type: "success" },
-        { id: 3, text: "Storage at 85% Capacity", time: "3 hours ago", read: true, type: "warning" },
-        { id: 4, text: "System Audit Completed", time: "Yesterday", read: true, type: "info" },
-        { id: 5, text: "You earned +10 CS Credits", time: "2 days ago", read: true, type: "credit" }
-    ]);
-
+    const [notifications, setNotifications] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
+
+    // Fetch Notifications
+    const fetchNotifications = async () => {
+        try {
+            const res = await api.get('/notifications');
+            setNotifications(res.data);
+        } catch (error) {
+            console.error("Failed to fetch notifications", error);
+        }
+    };
+
+    // Poll for notifications every 30 seconds
+    useEffect(() => {
+        fetchNotifications();
+        const interval = setInterval(fetchNotifications, 30000);
+        return () => clearInterval(interval);
+    }, []);
 
     const unreadCount = notifications.filter(n => !n.read).length;
 
     const toggleDropdown = () => setIsOpen(!isOpen);
     const closeDropdown = () => setIsOpen(false);
 
-    const markAsRead = (id) => {
-        setNotifications(prev => prev.map(n =>
-            n.id === id ? { ...n, read: true } : n
-        ));
+    const markAsRead = async (id) => {
+        try {
+            await api.put(`/notifications/${id}/read`);
+            setNotifications(prev => prev.map(n =>
+                n.id === id ? { ...n, read: true } : n
+            ));
+        } catch (error) {
+            console.error("Error marking read", error);
+        }
     };
 
-    const markAllAsRead = () => {
-        setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+    const markAllAsRead = async () => {
+        try {
+            await api.put(`/notifications/read-all`);
+            setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+        } catch (error) {
+            console.error("Error marking all read", error);
+        }
     };
 
+    // Optimistic UI update for immediate feedback if needed
     const addNotification = (notif) => {
         setNotifications(prev => [{ id: Date.now(), read: false, time: "Just now", ...notif }, ...prev]);
     };

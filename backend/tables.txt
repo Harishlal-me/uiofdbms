@@ -1,0 +1,38 @@
+[
+  {
+    "Tables_in_lost_found_system_2028": "auditlog"
+  },
+  {
+    "Tables_in_lost_found_system_2028": "categories"
+  },
+  {
+    "Tables_in_lost_found_system_2028": "foundreports"
+  },
+  {
+    "Tables_in_lost_found_system_2028": "itemclaims"
+  },
+  {
+    "Tables_in_lost_found_system_2028": "itemconditionreport"
+  },
+  {
+    "Tables_in_lost_found_system_2028": "locations"
+  },
+  {
+    "Tables_in_lost_found_system_2028": "lostreports"
+  },
+  {
+    "Tables_in_lost_found_system_2028": "matches"
+  },
+  {
+    "Tables_in_lost_found_system_2028": "notifications"
+  },
+  {
+    "Tables_in_lost_found_system_2028": "pendingmatchesview"
+  },
+  {
+    "Tables_in_lost_found_system_2028": "storagelocations"
+  },
+  {
+    "Tables_in_lost_found_system_2028": "users"
+  }
+]

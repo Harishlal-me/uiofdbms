@@ -1,28 +1,31 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Button, Input, Card } from '../../components/ui/Primitives';
 import { Shield, User, GraduationCap } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 export default function LoginPage() {
     const navigate = useNavigate();
-    const [role, setRole] = useState('user');
+    const { login } = useAuth(); // Use Auth Context
+    const [role, setRole] = useState('user'); // Kept for UI toggle, but login is via email/password
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState(''); // New state
     const [isLoading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
-    const handleLogin = (e) => {
-        e.preventDefault();
+    const handleLogin = async (e) => {
+        if (e && e.preventDefault) e.preventDefault();
         setLoading(true);
+        setError('');
 
-        // Simulate API Call
-        setTimeout(() => {
-            localStorage.setItem('userRole', role);
-            localStorage.setItem('userEmail', email || 'demo@campussafe.edu');
+        const result = await login(email, password);
 
-            if (role === 'admin') navigate('/admin');
-            else navigate('/dashboard');
-
-            setLoading(false);
-        }, 1000);
+        if (result.success) {
+            navigate('/dashboard');
+        } else {
+            setError(result.message);
+        }
+        setLoading(false);
     };
 
     const RoleCard = ({ id, label, icon: Icon }) => (
@@ -92,20 +95,9 @@ export default function LoginPage() {
                             required
                         />
 
-                        {role === 'user' && (
-                            <div className="grid grid-cols-2 gap-4">
-                                <Input
-                                    label="RA Number"
-                                    placeholder="RA..."
-                                    className="uppercase"
-                                    required
-                                />
-                                <Input
-                                    label="Phone Number"
-                                    placeholder="98..."
-                                    type="tel"
-                                    required
-                                />
+                        {error && (
+                            <div className="p-3 bg-red-50 text-red-600 text-sm rounded-lg border border-red-100">
+                                {error}
                             </div>
                         )}
 
@@ -115,6 +107,8 @@ export default function LoginPage() {
                                 type="password"
                                 className="w-full h-10 px-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                                 placeholder="••••••••"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
                         </div>
@@ -124,9 +118,11 @@ export default function LoginPage() {
                         </Button>
                     </form>
 
-                    <p className="text-center mt-8 text-sm text-slate-500">
-                        Don't have an account? <a href="#" className="text-indigo-600 font-semibold hover:underline">Sign up</a>
-                    </p>
+                    {role !== 'admin' && (
+                        <p className="text-center mt-8 text-sm text-slate-500">
+                            Don't have an account? <Link to="/register" className="text-indigo-600 font-semibold hover:underline">Sign up</Link>
+                        </p>
+                    )}
                 </div>
             </div>
         </div>

@@ -1,32 +1,81 @@
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Card, Input } from '../../components/ui/Primitives';
-import { MapPin, Box, Hash, Phone, AlertTriangle, FileText, Info } from 'lucide-react';
-import { useState } from 'react';
+import { Package, MapPin, TriangleAlert, Hash, Phone } from 'lucide-react';
+import api from '../../services/api';
+import { useAuth } from '../../context/AuthContext';
+import { Card, Input, Button } from '../../components/ui/Primitives';
 
 export default function ReportFound() {
     const navigate = useNavigate();
+    const { user } = useAuth();
+
+    const [categories, setCategories] = useState([]);
+    const [storageLocations, setStorageLocations] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        Promise.all([
+            api.get('/categories'),
+            api.get('/storage')
+        ]).then(([catRes, storeRes]) => {
+            const cats = Array.isArray(catRes.data) ? catRes.data : [];
+            const stores = Array.isArray(storeRes.data) ? storeRes.data : [];
+
+            setCategories(cats);
+            setStorageLocations(stores);
+
+            if (cats.length > 0) setFormData(p => ({ ...p, category: cats[0].category_id }));
+            // Optional: Default storage? User must select it, so maybe leave empty.
+
+            setLoading(false);
+        }).catch(err => {
+            console.error("Error fetching report found data:", err);
+            setLoading(false);
+        });
+    }, []);
+
     const [formData, setFormData] = useState({
         itemName: '',
-        category: 'Electronics',
+        category: '', // ID
         description: '',
         raNumber: '',
         phoneNumber: '',
         dateFound: '',
         locationFound: '',
-        storageLocation: '', // Default empty to force selection
-        nearbyLocation: '',
-        customLocation: ''
+        storageLocation: '', // ID
+        image: null
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Submitting Found Report:", formData);
 
-        // Simulate API
-        setTimeout(() => {
+        try {
+            const formDataObj = new FormData();
+            formDataObj.append('item_name', formData.itemName);
+            formDataObj.append('category_id', formData.category);
+            formDataObj.append('location_id', 1);
+            formDataObj.append('storage_location_id', formData.storageLocation);
+            formDataObj.append('description', formData.description);
+            formDataObj.append('found_date', formData.dateFound);
+            formDataObj.append('contact_phone', formData.phoneNumber);
+            formDataObj.append('ra_reg_no', formData.raNumber);
+            formDataObj.append('specific_location', formData.locationFound);
+            formDataObj.append('color', 'Unknown');
+
+            if (formData.image) {
+                formDataObj.append('image', formData.image);
+            }
+
+            await api.post('/found', formDataObj, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+
             alert(`Report Submitted! You earned +10 CS Credits. Please ensure the item is at: ${formData.storageLocation}`);
-            navigate('/dashboard');
-        }, 500);
+            navigate('/reported-found');
+        } catch (error) {
+            console.error(error);
+            alert("Failed to submit: " + (error.response?.data?.message || error.message));
+        }
     };
 
     return (
@@ -42,7 +91,7 @@ export default function ReportFound() {
                     {/* Section 1: Item Details */}
                     <div className="space-y-6">
                         <h3 className="text-emerald-800 font-semibold border-b border-emerald-100 pb-2 flex items-center gap-2">
-                            <Box size={18} /> Item Information
+                            <Package size={18} /> Item Information
                         </h3>
 
                         <div className="grid md:grid-cols-2 gap-6">
@@ -55,13 +104,15 @@ export default function ReportFound() {
                             />
                             <div>
                                 <label className="block text-sm font-medium text-slate-700 mb-1.5">Category</label>
-                                <select className="w-full h-10 px-3 rounded-lg border border-slate-200 bg-white text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
-                                    <option>Electronics</option>
-                                    <option>Clothing / Accessories</option>
-                                    <option>Books / Stationery</option>
-                                    <option>IDs / Cards</option>
-                                    <option>Keys</option>
-                                    <option>Others</option>
+                                <select
+                                    className="w-full h-10 px-3 rounded-lg border border-slate-200 bg-white text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
+                                    value={formData.category} // ID
+                                    onChange={e => setFormData({ ...formData, category: e.target.value })}
+                                    disabled={loading}
+                                >
+                                    {loading ? <option>Loading...</option> : categories.map(cat => (
+                                        <option key={cat.category_id} value={cat.category_id}>{cat.category_name}</option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
@@ -78,18 +129,48 @@ export default function ReportFound() {
                         </div>
 
                         <div className="grid md:grid-cols-2 gap-6">
-                            <Input label="Date Found" type="date" required />
-                            <Input label="Distinct Location Found" placeholder="e.g. Under Table 4 in Java Canteen" required icon={MapPin} />
+                            <Input
+                                label="Date Found"
+                                type="date"
+                                required
+                                value={formData.dateFound}
+                                onChange={e => setFormData({ ...formData, dateFound: e.target.value })}
+                            />
+                            <Input
+                                label="Distinct Location Found"
+                                placeholder="e.g. Under Table 4 in Java Canteen"
+                                required
+                                value={formData.locationFound}
+                                onChange={e => setFormData({ ...formData, locationFound: e.target.value })}
+                            />
+                        </div>
+                        <div className="border-2 border-dashed border-emerald-200 rounded-xl p-6 text-center hover:bg-emerald-50 transition-colors cursor-pointer group relative">
+                            <input
+                                type="file"
+                                accept="image/*"
+                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                onChange={e => {
+                                    if (e.target.files[0]) {
+                                        setFormData({ ...formData, image: e.target.files[0] });
+                                    }
+                                }}
+                            />
+                            <div className="flex flex-col items-center">
+                                <span className="text-emerald-600 font-medium mb-1">
+                                    {formData.image ? formData.image.name : "+ Upload Photo (Optional)"}
+                                </span>
+                                <span className="text-xs text-slate-400">Helps user verify ownership</span>
+                            </div>
                         </div>
                     </div>
 
                     {/* Section 2: Storage & Handover (CRITICAL) */}
                     <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-6">
                         <h3 className="text-emerald-800 font-semibold mb-2 flex items-center gap-2">
-                            <Box className="w-4 h-4" /> Where is the item currently kept?
+                            <Package className="w-4 h-4" /> Where is the item currently kept?
                         </h3>
                         <div className="flex gap-3 mb-4 bg-white/60 p-3 rounded-lg border border-emerald-100">
-                            <AlertTriangle className="w-5 h-5 text-emerald-600 shrink-0" />
+                            <TriangleAlert className="w-5 h-5 text-emerald-600 shrink-0" />
                             <p className="text-sm text-emerald-800 leading-tight">
                                 <strong>Important:</strong> Please select the exact location where you have deposited or are keeping the item. This cannot be changed later.
                             </p>
@@ -99,17 +180,15 @@ export default function ReportFound() {
                             <label className="block text-sm font-medium text-emerald-900 mb-1.5">Select Storage Location</label>
                             <select
                                 className="w-full h-10 px-3 rounded-lg border border-emerald-200 bg-white text-sm focus:ring-2 focus:ring-emerald-500 outline-none text-emerald-900"
-                                value={formData.storageLocation}
+                                value={formData.storageLocation} // ID
                                 onChange={e => setFormData({ ...formData, storageLocation: e.target.value })}
                                 required
+                                disabled={loading}
                             >
                                 <option value="" disabled>Select a location...</option>
-                                <option>Security Main Office</option>
-                                <option>Library Help Desk</option>
-                                <option>Hostel Office (Girls)</option>
-                                <option>Hostel Office (Boys)</option>
-                                <option>Admin Block</option>
-                                <option>Student Center</option>
+                                {storageLocations.map(loc => (
+                                    <option key={loc.storage_id} value={loc.storage_id}>{loc.room_name}</option>
+                                ))}
                             </select>
                         </div>
                     </div>
@@ -121,7 +200,6 @@ export default function ReportFound() {
                             <Input
                                 label="RA Number"
                                 placeholder="RA21..."
-                                icon={Hash}
                                 required
                                 value={formData.raNumber}
                                 onChange={e => setFormData({ ...formData, raNumber: e.target.value.toUpperCase() })}
@@ -129,7 +207,6 @@ export default function ReportFound() {
                             <Input
                                 label="Phone Number"
                                 placeholder="9876543210"
-                                icon={Phone}
                                 type="tel"
                                 required
                                 value={formData.phoneNumber}

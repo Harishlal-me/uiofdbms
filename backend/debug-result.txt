@@ -1,0 +1,4 @@
+DB Config: { host: 'localhost', user: 'root', db: 'lost_found_systemm' }
+Testing DB Query via config/db.js...
+Connected to MySQL database
+User found? false

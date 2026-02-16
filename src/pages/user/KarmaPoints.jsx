@@ -1,5 +1,5 @@
 import { Card, Badge } from '../../components/ui/Primitives';
-import { Award, TrendingUp, Shield, Gift, Star, CheckCircle } from 'lucide-react';
+import { Award, TrendingUp, Shield, Gift, Star, CircleCheck } from 'lucide-react';
 
 export default function KarmaPoints() {
     return (
@@ -41,7 +41,7 @@ export default function KarmaPoints() {
                     </h2>
                     <Card className="divide-y divide-slate-100">
                         {[
-                            { action: 'Item Returned to Owner', points: '+50', date: '2 days ago', icon: CheckCircle },
+                            { action: 'Item Returned to Owner', points: '+50', date: '2 days ago', icon: CircleCheck },
                             { action: 'Reported Found Item', points: '+15', date: 'Oct 24', icon: Star },
                             { action: 'Reported Lost Item', points: '+10', date: 'Oct 12', icon: Shield },
                         ].map((item, i) => (

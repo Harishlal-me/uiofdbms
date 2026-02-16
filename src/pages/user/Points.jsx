@@ -1,5 +1,5 @@
 import { Card, Badge } from '../../components/ui/Primitives';
-import { Award, CheckCircle, TrendingUp, Star, Shield, Gift } from 'lucide-react';
+import { Award, CircleCheck, TrendingUp, Star, Shield, Gift } from 'lucide-react';
 
 export default function PointsPage() {
     return (
@@ -51,7 +51,7 @@ export default function PointsPage() {
                     </h2>
                     <Card className="divide-y divide-slate-100">
                         {[
-                            { action: 'Item Returned to Owner', points: '+50', date: '2 days ago', icon: CheckCircle, color: 'text-emerald-600 bg-emerald-100' },
+                            { action: 'Item Returned to Owner', points: '+50', date: '2 days ago', icon: CircleCheck, color: 'text-emerald-600 bg-emerald-100' },
                             { action: 'Reported Found Item', points: '+15', date: 'Oct 24', icon: Star, color: 'text-amber-600 bg-amber-100' },
                             { action: 'Reported Lost Item', points: '+10', date: 'Oct 12', icon: Shield, color: 'text-blue-600 bg-blue-100' },
                             { action: 'Verified Identity', points: '+5', date: 'Sep 30', icon: Shield, color: 'text-slate-600 bg-slate-100' },

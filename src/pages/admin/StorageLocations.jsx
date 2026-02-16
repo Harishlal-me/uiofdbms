@@ -1,5 +1,5 @@
 import { Card, Button, Badge } from '../../components/ui/Primitives';
-import { MapPin, Plus, Phone, Clock, Box } from 'lucide-react';
+import { MapPin, Plus, Phone, Clock, Package } from 'lucide-react';
 
 export default function StorageLocations() {
     const locations = [
@@ -34,7 +34,7 @@ export default function StorageLocations() {
 
                             <h3 className="font-bold text-lg text-slate-900 mb-1">{loc.name}</h3>
                             <div className="text-sm text-slate-500 mb-6 flex items-center gap-2">
-                                <Box size={14} /> {loc.items} Items Stored
+                                <Package size={14} /> {loc.items} Items Stored
                             </div>
 
                             <div className="space-y-3 pt-4 border-t border-slate-100">

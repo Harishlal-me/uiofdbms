@@ -1,0 +1,51 @@
+DB Config Host: localhost
+DB Config User: root
+
+--- Checking lost_found_system_2028 ---
+Connected to lost_found_system_2028. Querying users...
+Users in lost_found_system_2028: [
+  {
+    "email": "harish@srm.edu",
+    "role": "student"
+  },
+  {
+    "email": "priya@srm.edu",
+    "role": "student"
+  },
+  {
+    "email": "rahul@srm.edu",
+    "role": "student"
+  },
+  {
+    "email": "sneha@srm.edu",
+    "role": "student"
+  },
+  {
+    "email": "admin@srm.edu",
+    "role": "admin"
+  },
+  {
+    "email": "meena@srm.edu",
+    "role": "admin"
+  },
+  {
+    "email": "lal@srm.edu",
+    "role": "student"
+  },
+  {
+    "email": "sha@srm.edu",
+    "role": "student"
+  },
+  {
+    "email": "hakar@srm.edu",
+    "role": "admin"
+  }
+]
+
+--- Checking lost_found_system ---
+Connected to lost_found_system. Querying users...
+Users in lost_found_system: []
+
+--- Checking lost_found_systemm ---
+Connected to lost_found_systemm. Querying users...
+Users in lost_found_systemm: []

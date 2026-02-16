@@ -1,17 +1,43 @@
-import { useState } from 'react';
+
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Card, Input } from '../../components/ui/Primitives';
-import { ChevronRight, ChevronLeft, Upload, Check, MapPin, Phone, Hash, AlertTriangle, FileText } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Upload, Check, MapPin, Phone, Hash, TriangleAlert, FileText } from 'lucide-react';
+import api from '../../services/api';
+import { useAuth } from '../../context/AuthContext';
 
 export default function ReportLost() {
     const navigate = useNavigate();
+    const { user } = useAuth();
     const [step, setStep] = useState(1);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const [loadingCats, setLoadingCats] = useState(true);
+
+    useEffect(() => {
+        api.get('/categories')
+            .then(res => {
+                if (Array.isArray(res.data)) {
+                    setCategories(res.data);
+                    if (res.data.length > 0 && !formData.category) {
+                        setFormData(prev => ({ ...prev, category: res.data[0].category_id }));
+                    }
+                } else {
+                    console.error("Categories API response is not an array:", res.data);
+                    setCategories([]);
+                }
+                setLoadingCats(false);
+            })
+            .catch(err => {
+                console.error("Failed to fetch categories:", err);
+                setLoadingCats(false);
+            });
+    }, []);
 
     const [formData, setFormData] = useState({
         itemName: '',
-        category: 'electronics',
+        category: '', // Will store ID
         raNumber: '',
         phoneNumber: '',
         dateLost: '',
@@ -29,17 +55,37 @@ export default function ReportLost() {
         setIsConfirmOpen(true);
     };
 
-    const confirmSubmit = () => {
+    const confirmSubmit = async () => {
         setIsSubmitting(true);
-        console.log("Submitting Lost Report:", formData);
+        try {
+            const formDataObj = new FormData();
+            formDataObj.append('item_name', formData.itemName);
+            formDataObj.append('category_id', formData.category);
+            formDataObj.append('location_id', 1); // Default
+            formDataObj.append('description', formData.description || 'No description');
+            formDataObj.append('lost_date', formData.dateLost);
+            formDataObj.append('contact_phone', formData.phoneNumber);
+            formDataObj.append('ra_reg_no', formData.raNumber);
+            formDataObj.append('specific_location', formData.location);
+            formDataObj.append('color', 'Unknown');
 
-        // Simulate API
-        setTimeout(() => {
-            // No need to set submitting false if we navigate away, but good practice if nav fails
-            // setIsSubmitting(false); 
+            if (formData.image) {
+                formDataObj.append('image', formData.image);
+            }
+
+            const res = await api.post('/lost', formDataObj, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            console.log("Response:", res.data);
+
             alert("Report Submitted Successfully! You earned +5 CS Credits.");
-            navigate('/dashboard');
-        }, 1500);
+            navigate('/reported-lost');
+        } catch (error) {
+            console.error(error);
+            alert("Failed to submit report: " + (error.response?.data?.message || error.message));
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const StepIndicator = () => (
@@ -109,14 +155,13 @@ export default function ReportLost() {
                                 <label className="block text-sm font-medium text-slate-700 mb-1.5">Category</label>
                                 <select
                                     className="w-full h-10 px-3 rounded-lg border border-slate-200 bg-white text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
-                                    value={formData.category}
+                                    value={formData.category} // Acts as category_id
                                     onChange={e => setFormData({ ...formData, category: e.target.value })}
+                                    disabled={loadingCats}
                                 >
-                                    <option value="electronics">Electronics</option>
-                                    <option value="clothing">Clothing</option>
-                                    <option value="keys">Keys / ID</option>
-                                    <option value="books">Books</option>
-                                    <option value="other">Other</option>
+                                    {loadingCats ? <option>Loading...</option> : (categories || []).map(cat => (
+                                        <option key={cat.category_id} value={cat.category_id}>{cat.category_name}</option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
@@ -152,11 +197,23 @@ export default function ReportLost() {
                                 />
                             </div>
 
-                            <div className="border-2 border-dashed border-slate-200 rounded-xl p-8 text-center hover:bg-slate-50 transition-colors cursor-pointer group">
+                            <div className="border-2 border-dashed border-slate-200 rounded-xl p-8 text-center hover:bg-slate-50 transition-colors cursor-pointer group relative">
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                    onChange={e => {
+                                        if (e.target.files[0]) {
+                                            setFormData({ ...formData, image: e.target.files[0] });
+                                        }
+                                    }}
+                                />
                                 <div className="w-12 h-12 bg-indigo-50 text-indigo-500 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
                                     <Upload className="h-6 w-6" />
                                 </div>
-                                <div className="text-sm font-medium text-slate-900">Upload a reference photo</div>
+                                <div className="text-sm font-medium text-slate-900">
+                                    {formData.image ? formData.image.name : "Upload a reference photo"}
+                                </div>
                                 <div className="text-xs text-slate-500 mt-1">If you have an old picture of the item</div>
                             </div>
                         </div>
@@ -194,7 +251,7 @@ export default function ReportLost() {
                             </div>
 
                             <div className="flex gap-3 bg-indigo-50 p-4 rounded-lg text-indigo-800 text-sm items-start">
-                                <AlertTriangle className="shrink-0 mt-0.5" size={16} />
+                                <TriangleAlert className="shrink-0 mt-0.5" size={16} />
                                 <p>Please confirm all details are correct. Inaccurate information may delay the manual verification process.</p>
                             </div>
                         </div>

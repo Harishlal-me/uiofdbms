@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, CheckCircle2, Search, ShieldCheck, Clock, MapPin, ChevronRight, Lock } from 'lucide-react';
+import { ArrowRight, CircleCheck, Search, ShieldCheck, Clock, MapPin, ChevronRight, Lock } from 'lucide-react';
 import { Button } from '../../components/ui/Primitives';
 import Logo from '../../components/ui/Logo';
 
@@ -65,7 +65,7 @@ export default function LandingPage() {
                         </div>
 
                         <div className="mt-12 flex items-center gap-6 text-sm text-slate-500 font-medium">
-                            <div className="flex items-center gap-2"><div className="p-1 bg-emerald-100 rounded-full"><CheckCircle2 className="text-emerald-600 w-3.5 h-3.5" /></div> SRM Approved</div>
+                            <div className="flex items-center gap-2"><div className="p-1 bg-emerald-100 rounded-full"><CircleCheck className="text-emerald-600 w-3.5 h-3.5" /></div> SRM Approved</div>
                             <div className="flex items-center gap-2"><div className="p-1 bg-blue-100 rounded-full"><Clock className="text-blue-600 w-3.5 h-3.5" /></div> 24/7 Matching</div>
                             <div className="flex items-center gap-2"><div className="p-1 bg-violet-100 rounded-full"><ShieldCheck className="text-violet-600 w-3.5 h-3.5" /></div> Secure Storage</div>
                         </div>
@@ -97,7 +97,7 @@ export default function LandingPage() {
                             {/* Floating Badge */}
                             <div className="absolute bottom-8 -left-8 bg-white p-4 rounded-xl shadow-xl border border-slate-100 animate-in slide-in-from-bottom-8 fade-in duration-700 flex items-center gap-4">
                                 <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600">
-                                    <CheckCircle2 size={24} />
+                                    <CircleCheck size={24} />
                                 </div>
                                 <div>
                                     <div className="text-sm font-bold text-slate-900">Items Recovered</div>

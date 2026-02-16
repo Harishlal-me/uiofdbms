@@ -1,0 +1,374 @@
+--- USERS ---
+[
+  {
+    "user_id": 1,
+    "name": "Harish Kumar",
+    "email": "harish@srm.edu",
+    "role": "student"
+  },
+  {
+    "user_id": 2,
+    "name": "Priya Sharma",
+    "email": "priya@srm.edu",
+    "role": "student"
+  },
+  {
+    "user_id": 3,
+    "name": "Rahul Verma",
+    "email": "rahul@srm.edu",
+    "role": "student"
+  },
+  {
+    "user_id": 4,
+    "name": "Sneha Patel",
+    "email": "sneha@srm.edu",
+    "role": "student"
+  },
+  {
+    "user_id": 5,
+    "name": "Admin Ravi",
+    "email": "admin@srm.edu",
+    "role": "admin"
+  },
+  {
+    "user_id": 6,
+    "name": "Admin Meena",
+    "email": "meena@srm.edu",
+    "role": "admin"
+  },
+  {
+    "user_id": 7,
+    "name": "lal",
+    "email": "lal@srm.edu",
+    "role": "student"
+  },
+  {
+    "user_id": 8,
+    "name": "shamili",
+    "email": "sha@srm.edu",
+    "role": "student"
+  },
+  {
+    "user_id": 9,
+    "name": "Admin Hakar",
+    "email": "hakar@srm.edu",
+    "role": "admin"
+  }
+]
+
+--- LOST REPORTS ---
+[
+  {
+    "lost_id": 1,
+    "user_id": 1,
+    "item_name": "Black Wallet",
+    "category_id": 101,
+    "location_id": 1,
+    "description": "Contains SRM college ID, SBI ATM card and some cash",
+    "lost_date": "2024-02-04T18:30:00.000Z",
+    "color": "Black",
+    "status": "Resolved",
+    "photo_url": null,
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  },
+  {
+    "lost_id": 2,
+    "user_id": 2,
+    "item_name": "iPhone 13",
+    "category_id": 102,
+    "location_id": 2,
+    "description": "Blue iPhone 13 with cracked screen protector on it",
+    "lost_date": "2024-02-05T18:30:00.000Z",
+    "color": "Blue",
+    "status": "Pending",
+    "photo_url": null,
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  },
+  {
+    "lost_id": 3,
+    "user_id": 3,
+    "item_name": "HP Pavilion Laptop",
+    "category_id": 105,
+    "location_id": 3,
+    "description": "Silver HP Pavilion 15 with CS Department sticker on back lid",
+    "lost_date": "2024-02-03T18:30:00.000Z",
+    "color": "Silver",
+    "status": "Pending",
+    "photo_url": null,
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  },
+  {
+    "lost_id": 4,
+    "user_id": 4,
+    "item_name": "Reading Glasses",
+    "category_id": 110,
+    "location_id": 1,
+    "description": "Black framed reading glasses, kept in a brown leather case",
+    "lost_date": "2024-02-06T18:30:00.000Z",
+    "color": "Black",
+    "status": "Pending",
+    "photo_url": null,
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  },
+  {
+    "lost_id": 5,
+    "user_id": 1,
+    "item_name": "MI Power Bank",
+    "category_id": 118,
+    "location_id": 1,
+    "description": "10000mAh MI power bank in white color, slightly scratched",
+    "lost_date": "2024-02-08T18:30:00.000Z",
+    "color": "White",
+    "status": "Pending",
+    "photo_url": null,
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  },
+  {
+    "lost_id": 6,
+    "user_id": 2,
+    "item_name": "Nike Backpack",
+    "category_id": 107,
+    "location_id": 4,
+    "description": "Blue Nike backpack with a separate laptop compartment inside",
+    "lost_date": "2024-02-09T18:30:00.000Z",
+    "color": "Blue",
+    "status": "Pending",
+    "photo_url": null,
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  },
+  {
+    "lost_id": 7,
+    "user_id": 3,
+    "item_name": "Apple Watch Series 7",
+    "category_id": 109,
+    "location_id": 9,
+    "description": "Black apple watch with black sports band, 45mm dial",
+    "lost_date": "2024-02-06T18:30:00.000Z",
+    "color": "Black",
+    "status": "Pending",
+    "photo_url": null,
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  },
+  {
+    "lost_id": 8,
+    "user_id": 4,
+    "item_name": "Red Umbrella",
+    "category_id": 113,
+    "location_id": 5,
+    "description": "Large red umbrella with a wooden curved handle",
+    "lost_date": "2024-02-05T18:30:00.000Z",
+    "color": "Red",
+    "status": "Pending",
+    "photo_url": null,
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  },
+  {
+    "lost_id": 9,
+    "user_id": 1,
+    "item_name": "Sony WH-1000XM4",
+    "category_id": 106,
+    "location_id": 1,
+    "description": "Black Sony noise cancelling headphones with carry case",
+    "lost_date": "2024-02-13T18:30:00.000Z",
+    "color": "Black",
+    "status": "Pending",
+    "photo_url": null,
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  },
+  {
+    "lost_id": 10,
+    "user_id": 2,
+    "item_name": "SanDisk 32GB USB",
+    "category_id": 119,
+    "location_id": 3,
+    "description": "Black SanDisk 32GB USB 3.0 pen drive",
+    "lost_date": "2024-02-14T18:30:00.000Z",
+    "color": "Black",
+    "status": "Pending",
+    "photo_url": null,
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  },
+  {
+    "lost_id": 11,
+    "user_id": 8,
+    "item_name": "dell lap",
+    "category_id": 101,
+    "location_id": 1,
+    "description": "dell laptop grey color",
+    "lost_date": "2026-02-14T18:30:00.000Z",
+    "color": "Unknown",
+    "status": "Pending",
+    "photo_url": null,
+    "created_at": "2026-02-15T18:05:31.000Z",
+    "updated_at": "2026-02-15T18:05:31.000Z"
+  },
+  {
+    "lost_id": 12,
+    "user_id": 8,
+    "item_name": "realmebuds",
+    "category_id": 101,
+    "location_id": 1,
+    "description": "realmebuds 2 pro blue color with batman case",
+    "lost_date": "2026-02-09T18:30:00.000Z",
+    "color": "Unknown",
+    "status": "Pending",
+    "photo_url": null,
+    "created_at": "2026-02-15T18:19:18.000Z",
+    "updated_at": "2026-02-15T18:19:18.000Z"
+  }
+]
+
+--- FOUND REPORTS ---
+[
+  {
+    "found_id": 1,
+    "user_id": 2,
+    "item_name": "Black Leather Wallet",
+    "category_id": 101,
+    "location_id": 1,
+    "description": "Found near study table, has a college ID inside",
+    "found_date": "2024-02-04T18:30:00.000Z",
+    "color": "Black",
+    "status": "Resolved",
+    "found_photo_url": "/photos/found/wallet_001.jpg",
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  },
+  {
+    "found_id": 2,
+    "user_id": 3,
+    "item_name": "Blue iPhone",
+    "category_id": 102,
+    "location_id": 2,
+    "description": "Found on cafeteria table near window side seat",
+    "found_date": "2024-02-05T18:30:00.000Z",
+    "color": "Blue",
+    "status": "Pending",
+    "found_photo_url": "/photos/found/iphone_002.jpg",
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  },
+  {
+    "found_id": 3,
+    "user_id": 4,
+    "item_name": "Silver HP Laptop",
+    "category_id": 105,
+    "location_id": 3,
+    "description": "Found at lab 102, has an SRM sticker on back",
+    "found_date": "2024-02-04T18:30:00.000Z",
+    "color": "Silver",
+    "status": "Pending",
+    "found_photo_url": "/photos/found/laptop_003.jpg",
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  },
+  {
+    "found_id": 4,
+    "user_id": 1,
+    "item_name": "Black Glasses",
+    "category_id": 110,
+    "location_id": 1,
+    "description": "Found black framed glasses on study desk, 2nd floor",
+    "found_date": "2024-02-06T18:30:00.000Z",
+    "color": "Black",
+    "status": "Pending",
+    "found_photo_url": "/photos/found/glasses_004.jpg",
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  },
+  {
+    "found_id": 5,
+    "user_id": 3,
+    "item_name": "White Power Bank",
+    "category_id": 118,
+    "location_id": 1,
+    "description": "MI power bank found on library table near charging area",
+    "found_date": "2024-02-08T18:30:00.000Z",
+    "color": "White",
+    "status": "Pending",
+    "found_photo_url": "/photos/found/powerbank_005.jpg",
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  },
+  {
+    "found_id": 6,
+    "user_id": 4,
+    "item_name": "Blue Nike Bag",
+    "category_id": 107,
+    "location_id": 4,
+    "description": "Nike backpack found near bleachers at basketball court",
+    "found_date": "2024-02-09T18:30:00.000Z",
+    "color": "Blue",
+    "status": "Pending",
+    "found_photo_url": "/photos/found/bag_006.jpg",
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  },
+  {
+    "found_id": 7,
+    "user_id": 1,
+    "item_name": "Black Apple Watch",
+    "category_id": 109,
+    "location_id": 9,
+    "description": "Apple watch found near gym locker, black sports band",
+    "found_date": "2024-02-07T18:30:00.000Z",
+    "color": "Black",
+    "status": "Pending",
+    "found_photo_url": "/photos/found/watch_007.jpg",
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  },
+  {
+    "found_id": 8,
+    "user_id": 2,
+    "item_name": "Red Umbrella",
+    "category_id": 113,
+    "location_id": 5,
+    "description": "Large red umbrella found at main gate security cabin",
+    "found_date": "2024-02-06T18:30:00.000Z",
+    "color": "Red",
+    "status": "Pending",
+    "found_photo_url": "/photos/found/umbrella_008.jpg",
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  },
+  {
+    "found_id": 9,
+    "user_id": 4,
+    "item_name": "Sony Headphones",
+    "category_id": 106,
+    "location_id": 1,
+    "description": "Black Sony headphones with carry case found in library",
+    "found_date": "2024-02-13T18:30:00.000Z",
+    "color": "Black",
+    "status": "Pending",
+    "found_photo_url": "/photos/found/headphones_009.jpg",
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  },
+  {
+    "found_id": 10,
+    "user_id": 1,
+    "item_name": "Black USB Drive",
+    "category_id": 119,
+    "location_id": 3,
+    "description": "SanDisk pen drive found near computer in IT lab",
+    "found_date": "2024-02-14T18:30:00.000Z",
+    "color": "Black",
+    "status": "Pending",
+    "found_photo_url": "/photos/found/usb_010.jpg",
+    "created_at": "2026-02-12T07:03:33.000Z",
+    "updated_at": "2026-02-12T07:03:33.000Z"
+  }
+]
+

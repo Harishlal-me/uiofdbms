@@ -1,18 +1,22 @@
 import { useState } from 'react';
 import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Search, FileSearch, FilePlus, LogOut, Menu, X, Bell, User, CheckCircle, Award, MapPin, FileText } from 'lucide-react';
+import { LayoutDashboard, Search, FileSearch, FilePlus, LogOut, Menu, X, Bell, User, CircleCheck, Award, MapPin, FileText } from 'lucide-react';
 import clsx from 'clsx';
 import Logo from '../ui/Logo';
 import NotificationBell from '../ui/NotificationBell';
+import { useAuth } from '../../context/AuthContext';
 
 export default function AppLayout() {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
-    const userRole = localStorage.getItem('userRole') || 'user';
+    const { user, logout } = useAuth();
+
+    // Default to 'user' if not loaded yet, though ProtectedRoute prevents this
+    const userRole = user?.role || 'user';
 
     const handleLogout = () => {
-        localStorage.clear();
+        logout();
         navigate('/login');
     };
 
@@ -73,11 +77,13 @@ export default function AppLayout() {
                     {userRole === 'admin' ? (
                         <>
                             <NavItem to="/admin" icon={LayoutDashboard} label="Dashboard" />
-                            <NavItem to="/admin/verification-queue" icon={CheckCircle} label="Verification Queue" />
+                            <NavItem to="/admin/verification-queue" icon={CircleCheck} label="Verification Queue" />
+                            <NavItem to="/admin/claims" icon={CircleCheck} label="Item Claims & Handover" />
                             <div className="mt-8 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4 px-4">Management</div>
                             <NavItem to="/admin/items" icon={FileSearch} label="Item Database" />
                             <NavItem to="/admin/users" icon={User} label="Users" />
                             <NavItem to="/admin/storage" icon={MapPin} label="Storage Locations" />
+                            <NavItem to="/admin/reports" icon={FileText} label="Final Reports" />
 
 
                             <div className="mt-8 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4 px-4">System</div>
@@ -93,8 +99,9 @@ export default function AppLayout() {
                             <NavItem to="/report-found" icon={FilePlus} label="Report Found" />
 
                             <div className="mt-6 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 px-4">My Activity</div>
+                            <NavItem to="/my-matches" icon={CircleCheck} label="My Matches" />
                             <NavItem to="/reported-lost" icon={Search} label="Reported Lost" />
-                            <NavItem to="/reported-found" icon={CheckCircle} label="Reported Found" />
+                            <NavItem to="/reported-found" icon={CircleCheck} label="Reported Found" />
                             <NavItem to="/cs-credits" icon={Award} label="CS Credits" />
                         </>
                     )}
@@ -122,7 +129,7 @@ export default function AppLayout() {
                 {/* Top Header (Desktop) */}
                 <header className="hidden md:flex h-16 bg-white border-b border-slate-200 items-center justify-between px-8 sticky top-0 z-10">
                     <div className="text-slate-500 text-sm">
-                        Welcome back, <span className="font-semibold text-slate-900">{userRole === 'admin' ? 'Admin' : 'Alex'}</span>
+                        Welcome back, <span className="font-semibold text-slate-900">{user?.name || 'Student'}</span>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -132,7 +139,7 @@ export default function AppLayout() {
 
                         <div className="flex items-center gap-2">
                             <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 text-xs font-bold ring-2 ring-white shadow-sm">
-                                {userRole[0].toUpperCase()}
+                                {user?.name?.[0]?.toUpperCase() || 'U'}
                             </div>
                         </div>
                     </div>
