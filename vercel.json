@@ -1,5 +1,7 @@
 {
     "version": 2,
+    "buildCommand": "npm run build",
+    "outputDirectory": "dist",
     "builds": [
         {
             "src": "backend/server.js",
@@ -12,12 +14,8 @@
             "dest": "backend/server.js"
         },
         {
-            "src": "/assets/(.*)",
-            "dest": "/assets/$1"
-        },
-        {
             "src": "/(.*)",
-            "dest": "/index.html"
+            "dest": "/dist/$1"
         }
     ]
 }
