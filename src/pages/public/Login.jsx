@@ -32,13 +32,13 @@ export default function LoginPage() {
         <div
             onClick={() => setRole(id)}
             className={`cursor-pointer p-4 rounded-xl border-2 transition-all flex flex-col items-center gap-2 ${role === id
-                ? 'border-indigo-600 bg-indigo-50 text-indigo-700'
-                : 'border-slate-100 bg-white hover:border-slate-200 text-slate-600'
+                ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400'
+                : 'border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-200 dark:hover:border-slate-700 text-slate-600 dark:text-slate-400'
                 }`}
         >
             <Icon className="w-6 h-6" />
             <span className="text-xs font-bold uppercase tracking-wider">{label}</span>
-            {role === id && <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-indigo-600"></div>}
+            {role === id && <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-indigo-600 dark:bg-indigo-500"></div>}
         </div>
     );
 
@@ -73,11 +73,11 @@ export default function LoginPage() {
             </div>
 
             {/* Right: Login Form */}
-            <div className="bg-white flex items-center justify-center p-8">
+            <div className="bg-white dark:bg-slate-950 flex items-center justify-center p-8 transition-colors duration-300">
                 <div className="w-full max-w-md">
                     <div className="text-center mb-10">
-                        <h2 className="text-2xl font-bold text-slate-900">Welcome back</h2>
-                        <p className="text-slate-500 mt-2">Please select your role to continue</p>
+                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Welcome back</h2>
+                        <p className="text-slate-500 dark:text-slate-400 mt-2">Please select your role to continue</p>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4 mb-8">
@@ -96,22 +96,19 @@ export default function LoginPage() {
                         />
 
                         {error && (
-                            <div className="p-3 bg-red-50 text-red-600 text-sm rounded-lg border border-red-100">
+                            <div className="p-3 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-sm rounded-lg border border-red-100 dark:border-red-800/50">
                                 {error}
                             </div>
                         )}
 
-                        <div className="space-y-1.5">
-                            <label className="block text-sm font-medium text-slate-700">Password</label>
-                            <input
-                                type="password"
-                                className="w-full h-10 px-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-                                placeholder="••••••••"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        </div>
+                        <Input
+                            label="Password"
+                            type="password"
+                            placeholder="••••••••"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
 
                         <Button type="submit" className="w-full h-11 text-base bg-brand-gradient hover:bg-brand-gradient-hover border-0 shadow-lg shadow-indigo-200" isLoading={isLoading}>
                             Sign In
@@ -119,8 +116,8 @@ export default function LoginPage() {
                     </form>
 
                     {role !== 'admin' && (
-                        <p className="text-center mt-8 text-sm text-slate-500">
-                            Don't have an account? <Link to="/register" className="text-indigo-600 font-semibold hover:underline">Sign up</Link>
+                        <p className="text-center mt-8 text-sm text-slate-500 dark:text-slate-400">
+                            Don't have an account? <Link to="/register" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">Sign up</Link>
                         </p>
                     )}
                 </div>

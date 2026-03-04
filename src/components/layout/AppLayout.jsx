@@ -26,8 +26,8 @@ export default function AppLayout() {
             className={({ isActive }) => clsx(
                 "flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors",
                 isActive
-                    ? "bg-indigo-50 text-indigo-700"
-                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                    ? "bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400"
+                    : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
             )}
             onClick={() => setSidebarOpen(false)}
         >
@@ -39,10 +39,10 @@ export default function AppLayout() {
     );
 
     return (
-        <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col md:flex-row transition-colors duration-300">
 
             {/* Mobile Header */}
-            <div className="md:hidden bg-white border-b border-slate-200 p-4 flex items-center justify-between sticky top-0 z-20">
+            <div className="md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 p-4 flex items-center justify-between sticky top-0 z-20 transition-colors duration-300">
                 <div className="flex items-center gap-2 font-bold text-lg text-indigo-600">
                     <Menu className="cursor-pointer" onClick={() => setSidebarOpen(true)} />
                     CampusSafe
@@ -59,11 +59,11 @@ export default function AppLayout() {
 
             {/* Sidebar Navigation */}
             <aside className={clsx(
-                "fixed md:sticky top-0 h-screen w-64 bg-white border-r border-slate-200 z-40 transition-transform duration-200 flex flex-col",
+                "fixed md:sticky top-0 h-screen w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-40 transition-transform duration-200 flex flex-col",
                 isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
             )}>
                 {/* Logo Area */}
-                <div className="h-16 flex items-center px-6 border-b border-slate-100">
+                <div className="h-16 flex items-center px-6 border-b border-slate-100 dark:border-slate-800">
                     <Logo />
                     <button className="ml-auto md:hidden" onClick={() => setSidebarOpen(false)}>
                         <X className="text-slate-400" />
@@ -110,9 +110,9 @@ export default function AppLayout() {
                 </nav>
 
                 {/* User Profile Snippet (Sidebar Footer) */}
-                <div className="p-4 border-t border-slate-100">
+                <div className="p-4 border-t border-slate-100 dark:border-slate-800">
                     <div className="flex items-center gap-3 mb-4">
-                        <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-bold">
+                        <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 font-bold">
                             {userRole === 'admin' ? 'AD' : 'ST'}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -127,15 +127,15 @@ export default function AppLayout() {
             {/* Main Content Area */}
             <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
                 {/* Top Header (Desktop) */}
-                <header className="hidden md:flex h-16 bg-white border-b border-slate-200 items-center justify-between px-8 sticky top-0 z-10">
-                    <div className="text-slate-500 text-sm">
-                        Welcome back, <span className="font-semibold text-slate-900">{user?.name || 'Student'}</span>
+                <header className="hidden md:flex h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 items-center justify-between px-8 sticky top-0 z-10 transition-colors duration-300">
+                    <div className="text-slate-500 dark:text-slate-400 text-sm">
+                        Welcome back, <span className="font-semibold text-slate-900 dark:text-white">{user?.name || 'Student'}</span>
                     </div>
 
                     <div className="flex items-center gap-4">
                         <NotificationBell />
 
-                        <div className="w-px h-6 bg-slate-200 mx-2"></div>
+                        <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-2"></div>
 
                         <div className="flex items-center gap-2">
                             <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 text-xs font-bold ring-2 ring-white shadow-sm">

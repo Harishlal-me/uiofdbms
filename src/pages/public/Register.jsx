@@ -68,15 +68,15 @@ export default function RegisterPage() {
             </div>
 
             {/* Right: Register Form */}
-            <div className="bg-white flex items-center justify-center p-8 overflow-y-auto">
+            <div className="bg-white dark:bg-slate-950 flex items-center justify-center p-8 overflow-y-auto transition-colors duration-300">
                 <div className="w-full max-w-md py-8">
                     <div className="text-center mb-8">
-                        <h2 className="text-2xl font-bold text-slate-900">Create an Account</h2>
-                        <p className="text-slate-500 mt-2">Enter your details to get started</p>
+                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Create an Account</h2>
+                        <p className="text-slate-500 dark:text-slate-400 mt-2">Enter your details to get started</p>
                     </div>
 
                     {error && (
-                        <div className="mb-6 p-4 bg-red-50 text-red-600 text-sm rounded-xl border border-red-100 flex items-center gap-2">
+                        <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-sm rounded-xl border border-red-100 dark:border-red-800/50 flex items-center gap-2">
                             <div className="w-1.5 h-1.5 rounded-full bg-red-500"></div>
                             {error}
                         </div>
@@ -118,12 +118,12 @@ export default function RegisterPage() {
                         />
 
                         <div className="space-y-1.5">
-                            <label className="block text-sm font-medium text-slate-700">Password</label>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">Password</label>
                             <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500" size={18} />
                                 <input
                                     type="password"
-                                    className="w-full h-11 pl-10 pr-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all"
+                                    className="w-full h-11 pl-10 pr-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-900/30 focus:outline-none transition-all placeholder-slate-400 dark:placeholder-slate-500"
                                     placeholder="••••••••"
                                     value={formData.password}
                                     onChange={e => setFormData({ ...formData, password: e.target.value })}
@@ -133,12 +133,12 @@ export default function RegisterPage() {
                         </div>
 
                         <div className="space-y-1.5">
-                            <label className="block text-sm font-medium text-slate-700">Confirm Password</label>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">Confirm Password</label>
                             <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500" size={18} />
                                 <input
                                     type="password"
-                                    className="w-full h-11 pl-10 pr-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all"
+                                    className="w-full h-11 pl-10 pr-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-900/30 focus:outline-none transition-all placeholder-slate-400 dark:placeholder-slate-500"
                                     placeholder="••••••••"
                                     value={formData.confirmPassword}
                                     onChange={e => setFormData({ ...formData, confirmPassword: e.target.value })}
@@ -154,8 +154,8 @@ export default function RegisterPage() {
                         </div>
                     </form>
 
-                    <p className="text-center mt-8 text-sm text-slate-500">
-                        Already have an account? <Link to="/login" className="text-indigo-600 font-bold hover:underline">Sign in</Link>
+                    <p className="text-center mt-8 text-sm text-slate-500 dark:text-slate-400">
+                        Already have an account? <Link to="/login" className="text-indigo-600 dark:text-indigo-400 font-bold hover:underline">Sign in</Link>
                     </p>
                 </div>
             </div>

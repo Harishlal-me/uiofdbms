@@ -39,8 +39,8 @@ export default function Dashboard() {
             {/* Welcome Section */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-900">Welcome back, {user?.name || 'Student'}</h1>
-                    <p className="text-slate-500">Here's what's happening with your items.</p>
+                    <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Welcome back, {user?.name || 'Student'}</h1>
+                    <p className="text-slate-500 dark:text-slate-400">Here's what's happening with your items.</p>
                 </div>
                 <div className="flex gap-3">
                     <Button onClick={() => navigate('/report-lost')} className="bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-200">
@@ -58,33 +58,33 @@ export default function Dashboard() {
                     className="p-6 flex items-center gap-4 border-l-4 border-l-indigo-500 cursor-pointer hover:shadow-md transition-shadow"
                     onClick={() => navigate('/reported-lost')}
                 >
-                    <div className="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center">
+                    <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center">
                         <Search size={24} />
                     </div>
                     <div>
-                        <div className="text-2xl font-bold text-slate-900">{stats.pendingLost}</div>
-                        <div className="text-sm text-slate-500">Active Lost Reports</div>
+                        <div className="text-2xl font-bold text-slate-900 dark:text-white">{stats.pendingLost}</div>
+                        <div className="text-sm text-slate-500 dark:text-slate-400">Active Lost Reports</div>
                     </div>
                 </Card>
                 <Card
                     className="p-6 flex items-center gap-4 border-l-4 border-l-emerald-500 cursor-pointer hover:shadow-md transition-shadow"
                     onClick={() => navigate('/reported-found')}
                 >
-                    <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center">
+                    <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center">
                         <CircleCheck size={24} />
                     </div>
                     <div>
-                        <div className="text-2xl font-bold text-slate-900">{stats.pendingFound}</div>
-                        <div className="text-sm text-slate-500">Active Found Reports</div>
+                        <div className="text-2xl font-bold text-slate-900 dark:text-white">{stats.pendingFound}</div>
+                        <div className="text-sm text-slate-500 dark:text-slate-400">Active Found Reports</div>
                     </div>
                 </Card>
                 <Card className="p-6 flex items-center gap-4 border-l-4 border-l-amber-500 cursor-pointer hover:shadow-md transition-shadow" onClick={() => navigate('/cs-credits')}>
-                    <div className="w-12 h-12 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center">
+                    <div className="w-12 h-12 bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-full flex items-center justify-center">
                         <Award size={24} />
                     </div>
                     <div>
-                        <div className="text-2xl font-bold text-slate-900">{credits}</div>
-                        <div className="text-sm text-slate-500">CS Credits Earned</div>
+                        <div className="text-2xl font-bold text-slate-900 dark:text-white">{credits}</div>
+                        <div className="text-sm text-slate-500 dark:text-slate-400">CS Credits Earned</div>
                     </div>
                 </Card>
             </div>
@@ -93,22 +93,22 @@ export default function Dashboard() {
             <div className="grid md:grid-cols-2 gap-6">
                 {/* Live Notifications */}
                 <Card className="p-6 h-full">
-                    <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
-                        <Bell size={18} className="text-indigo-600" /> Recent Notifications
+                    <h3 className="font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                        <Bell size={18} className="text-indigo-600 dark:text-indigo-400" /> Recent Notifications
                     </h3>
                     <div className="space-y-4">
-                        <div className="flex gap-3 items-start p-3 bg-indigo-50/50 rounded-lg border border-indigo-100">
+                        <div className="flex gap-3 items-start p-3 bg-indigo-50/50 dark:bg-indigo-900/20 rounded-lg border border-indigo-100 dark:border-indigo-800/30">
                             <div className="w-2 h-2 mt-2 rounded-full bg-indigo-500 shrink-0"></div>
                             <div>
-                                <p className="text-sm font-medium text-slate-800">Potential Match Found</p>
-                                <p className="text-xs text-slate-500 mt-0.5">Your "Silver MacBook" matches a found item. Admin is verifying.</p>
+                                <p className="text-sm font-medium text-slate-800 dark:text-slate-200">Potential Match Found</p>
+                                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Your "Silver MacBook" matches a found item. Admin is verifying.</p>
                             </div>
                         </div>
-                        <div className="flex gap-3 items-start p-3 bg-slate-50 rounded-lg border border-slate-100">
-                            <div className="w-2 h-2 mt-2 rounded-full bg-slate-400 shrink-0"></div>
+                        <div className="flex gap-3 items-start p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-100 dark:border-slate-700/50">
+                            <div className="w-2 h-2 mt-2 rounded-full bg-slate-400 dark:bg-slate-500 shrink-0"></div>
                             <div>
-                                <p className="text-sm font-medium text-slate-800">System Update</p>
-                                <p className="text-xs text-slate-500 mt-0.5">Karma Points are now CS Credits! Check your balance.</p>
+                                <p className="text-sm font-medium text-slate-800 dark:text-slate-200">System Update</p>
+                                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Karma Points are now CS Credits! Check your balance.</p>
                             </div>
                         </div>
                     </div>

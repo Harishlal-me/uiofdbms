@@ -3,6 +3,7 @@ import { ArrowRight, CircleCheck, Search, ShieldCheck, Clock, MapPin, ChevronRig
 import { Button } from '../../components/ui/Primitives';
 import Logo from '../../components/ui/Logo';
 import { LocationMap } from '../../components/ui/expand-map';
+import { AnimatedThemeToggle } from '../../components/ui/animated-theme-toggle';
 
 export default function LandingPage() {
     const navigate = useNavigate();
@@ -11,20 +12,21 @@ export default function LandingPage() {
         <div className="min-h-screen bg-white font-sans selection:bg-indigo-100 selection:text-indigo-700">
 
             {/* 1. Navbar */}
-            <nav className="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200/50 transition-all">
+            <nav className="fixed top-0 inset-x-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50 transition-colors duration-300">
                 <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                     <Logo />
 
-                    <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-                        <a href="#how-it-works" className="hover:text-indigo-600 transition-colors">How it Works</a>
-                        <a href="#why-trusted" className="hover:text-indigo-600 transition-colors">Features</a>
-                        <a href="#security" className="hover:text-indigo-600 transition-colors">Security</a>
-                        <a href="#locations" className="hover:text-indigo-600 transition-colors">Locations</a>
-                        <a href="#about" className="hover:text-indigo-600 transition-colors">About</a>
+                    <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600 dark:text-slate-300">
+                        <a href="#how-it-works" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">How it Works</a>
+                        <a href="#why-trusted" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Features</a>
+                        <a href="#security" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Security</a>
+                        <a href="#locations" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Locations</a>
+                        <a href="#about" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">About</a>
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3">
                         <Button variant="ghost" onClick={() => navigate('/login')}>Log In</Button>
+                        <AnimatedThemeToggle className="h-9 w-9" />
                         <Button className="bg-brand-gradient hover:bg-brand-gradient-hover border-0 shadow-lg shadow-indigo-200" onClick={() => navigate('/login')}>
                             Sign Up
                         </Button>
@@ -33,9 +35,9 @@ export default function LandingPage() {
             </nav>
 
             {/* 2. Hero Section */}
-            <section className="pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden relative">
+            <section className="pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden relative dark:bg-slate-950 transition-colors duration-300">
                 {/* Background Gradients */}
-                <div className="absolute top-0 center-0 w-[1000px] h-[1000px] bg-indigo-50 rounded-full blur-3xl opacity-50 -z-10 -translate-y-1/2 translate-x-1/2"></div>
+                <div className="absolute top-0 center-0 w-[1000px] h-[1000px] bg-indigo-50 dark:bg-indigo-900/20 rounded-full blur-3xl opacity-50 -z-10 -translate-y-1/2 translate-x-1/2"></div>
 
                 <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
                     <div className="max-w-2xl">
@@ -47,12 +49,12 @@ export default function LandingPage() {
                             AI Matching System v2.0
                         </div>
 
-                        <h1 className="text-5xl lg:text-7xl font-bold text-slate-900 tracking-tight leading-[1.1] mb-6">
+                        <h1 className="text-5xl lg:text-7xl font-bold text-slate-900 dark:text-white tracking-tight leading-[1.1] mb-6">
                             Never lose <br />
                             <span className="text-transparent bg-clip-text bg-brand-gradient">anything</span> on campus.
                         </h1>
 
-                        <p className="text-lg text-slate-600 leading-relaxed mb-10 max-w-lg">
+                        <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed mb-10 max-w-lg">
                             The official AI-powered lost & found system for SRM University.
                             Secure storage, verified recovery, and instant matching.
                         </p>
@@ -116,11 +118,11 @@ export default function LandingPage() {
             </section>
 
             {/* 3. How It Works (Timeline) */}
-            <section id="how-it-works" className="py-24 bg-white relative overflow-hidden">
+            <section id="how-it-works" className="py-24 bg-white dark:bg-slate-900 relative overflow-hidden transition-colors duration-300">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="text-center mb-20">
-                        <div className="text-indigo-600 font-semibold uppercase tracking-wider text-sm mb-2">Process</div>
-                        <h2 className="text-3xl font-bold text-slate-900">How it works</h2>
+                        <div className="text-indigo-600 dark:text-indigo-400 font-semibold uppercase tracking-wider text-sm mb-2">Process</div>
+                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white">How it works</h2>
                     </div>
 
                     <div className="relative">
@@ -136,12 +138,12 @@ export default function LandingPage() {
                                 { step: "03", title: "Verify", desc: "Admins review high-confidence matches." },
                                 { step: "04", title: "Collect", desc: "Owner picks up item from secure storage." }
                             ].map((item, i) => (
-                                <div key={i} className="flex flex-col items-center text-center">
-                                    <div className="w-20 h-20 bg-white border-4 border-indigo-50 rounded-full flex items-center justify-center text-xl font-bold text-indigo-600 mb-6 shadow-sm relative z-10">
+                                <div key={i} className="group flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-1.5 cursor-pointer">
+                                    <div className="w-20 h-20 bg-white dark:bg-slate-800 border-4 border-indigo-50 dark:border-slate-700 rounded-full flex items-center justify-center text-xl font-bold text-indigo-600 dark:text-indigo-400 mb-6 shadow-sm relative z-10 transition-all duration-300 group-hover:scale-105 group-hover:shadow-md group-hover:border-indigo-100 dark:group-hover:border-indigo-900">
                                         {item.step}
                                     </div>
-                                    <h3 className="text-lg font-bold text-slate-900 mb-2">{item.title}</h3>
-                                    <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
+                                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 transition-all duration-300 group-hover:-translate-y-0.5">{item.title}</h3>
+                                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed transition-all duration-300 group-hover:-translate-y-0.5">{item.desc}</p>
                                 </div>
                             ))}
                         </div>
@@ -150,11 +152,11 @@ export default function LandingPage() {
             </section>
 
             {/* 4. Why Trusted Section */}
-            <section id="why-trusted" className="py-24 bg-slate-50/50">
+            <section id="why-trusted" className="py-24 bg-slate-50/50 dark:bg-slate-950 transition-colors duration-300">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="text-center max-w-2xl mx-auto mb-16">
-                        <h2 className="text-3xl font-bold text-slate-900 mb-4">Why trusted by SRM Security?</h2>
-                        <p className="text-slate-600 text-lg">We replaced the manual "lost book" register with an intelligent, automated system.</p>
+                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">Why trusted by SRM Security?</h2>
+                        <p className="text-slate-600 dark:text-slate-400 text-lg">We replaced the manual "lost book" register with an intelligent, automated system.</p>
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-8">
@@ -163,12 +165,12 @@ export default function LandingPage() {
                             { icon: Lock, color: "bg-emerald-500", title: "Secure Storage", desc: "All found items are stored in dedicated, access-controlled locations across campus (Library, Main Office)." },
                             { icon: ShieldCheck, color: "bg-violet-500", title: "Verified Recovery", desc: "Claimants must verify ownership through unique identifiers before items are released by security." }
                         ].map((feature, i) => (
-                            <div key={i} className="bg-white p-8 rounded-2xl border border-slate-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                                <div className={`w-14 h-14 ${feature.color} bg-opacity-10 rounded-2xl flex items-center justify-center mb-6`}>
+                            <div key={i} className="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                                <div className={`w-14 h-14 ${feature.color} bg-opacity-10 dark:bg-opacity-20 rounded-2xl flex items-center justify-center mb-6`}>
                                     <feature.icon className={`w-7 h-7 ${feature.color.replace('bg-', 'text-')}`} />
                                 </div>
-                                <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
-                                <p className="text-slate-600 leading-relaxed text-sm">{feature.desc}</p>
+                                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{feature.title}</h3>
+                                <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">{feature.desc}</p>
                             </div>
                         ))}
                     </div>
@@ -176,11 +178,11 @@ export default function LandingPage() {
             </section>
 
             {/* 5. Security Section */}
-            <section id="security" className="py-24 bg-slate-50/50">
+            <section id="security" className="py-24 bg-slate-50/50 dark:bg-slate-900 transition-colors duration-300">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="text-center max-w-2xl mx-auto mb-16">
-                        <h2 className="text-3xl font-bold text-slate-900 mb-4">Security</h2>
-                        <p className="text-slate-600 text-lg">
+                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">Security</h2>
+                        <p className="text-slate-600 dark:text-slate-400 text-lg">
                             CampusSafe ensures every recovered item is verified and securely handled
                             through controlled access and ownership verification.
                         </p>
@@ -192,12 +194,12 @@ export default function LandingPage() {
                             { icon: Lock, color: "bg-emerald-500", title: "Secure Storage", desc: "Recovered items are stored safely in authorized campus locations." },
                             { icon: BadgeCheck, color: "bg-violet-500", title: "Admin Monitoring", desc: "Campus security verifies and approves every claim." }
                         ].map((feature, i) => (
-                            <div key={i} className="bg-white p-8 rounded-2xl border border-slate-200 hover:shadow-xl transition-all duration-300">
-                                <div className={`w-14 h-14 ${feature.color} bg-opacity-10 rounded-2xl flex items-center justify-center mb-6`}>
+                            <div key={i} className="bg-white dark:bg-slate-950 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 hover:shadow-xl transition-all duration-300">
+                                <div className={`w-14 h-14 ${feature.color} bg-opacity-10 dark:bg-opacity-20 rounded-2xl flex items-center justify-center mb-6`}>
                                     <feature.icon className={`w-7 h-7 ${feature.color.replace('bg-', 'text-')}`} />
                                 </div>
-                                <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
-                                <p className="text-slate-600 leading-relaxed text-sm">{feature.desc}</p>
+                                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{feature.title}</h3>
+                                <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">{feature.desc}</p>
                             </div>
                         ))}
                     </div>
@@ -205,11 +207,11 @@ export default function LandingPage() {
             </section>
 
             {/* 6. Locations Section */}
-            <section id="locations" className="py-24 bg-white border-t border-slate-100">
+            <section id="locations" className="py-24 bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-800 transition-colors duration-300">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="text-center max-w-2xl mx-auto mb-16">
-                        <h2 className="text-3xl font-bold text-slate-900 mb-4">Locations</h2>
-                        <p className="text-slate-600 text-lg">CampusSafe is currently deployed in the following campus location.</p>
+                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">Locations</h2>
+                        <p className="text-slate-600 dark:text-slate-400 text-lg">CampusSafe is currently deployed in the following campus location.</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
@@ -243,53 +245,53 @@ export default function LandingPage() {
             </section>
 
             {/* 7. About Section */}
-            <section id="about" className="py-24 bg-slate-50/50 border-t border-slate-100">
+            <section id="about" className="py-24 bg-slate-50/50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 transition-colors duration-300">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="text-center max-w-2xl mx-auto mb-16">
-                        <h2 className="text-3xl font-bold text-slate-900 mb-4">About</h2>
-                        <p className="text-slate-600 text-lg">
+                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">About</h2>
+                        <p className="text-slate-600 dark:text-slate-400 text-lg">
                             CampusSafe is a smart AI-powered lost and found platform designed to help students and campus security quickly locate and recover lost belongings.
                         </p>
-                        <p className="text-slate-400 text-sm mt-8 uppercase tracking-widest font-semibold">
+                        <p className="text-slate-400 dark:text-slate-500 text-sm mt-8 uppercase tracking-widest font-semibold">
                             Built by
                         </p>
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-10 max-w-3xl mx-auto">
                         {/* Developer 1 */}
-                        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col items-center text-center">
-                            <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-slate-50">
+                        <div className="bg-white dark:bg-slate-950 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 flex flex-col items-center text-center">
+                            <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-slate-50 dark:border-slate-800">
                                 <img
-                                    src="/Image.jpeg"
+                                    src="/pics/harishlal.jpeg"
                                     alt="Harishlal"
                                     className="w-full h-full object-cover"
                                 />
                             </div>
-                            <h3 className="text-xl font-bold text-slate-900 mb-1">Harishlal</h3>
-                            <p className="text-indigo-600 text-sm font-medium bg-indigo-50 px-3 py-1 rounded-full">Developer</p>
+                            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Harishlal</h3>
+                            <p className="text-indigo-600 dark:text-indigo-400 text-sm font-medium bg-indigo-50 dark:bg-indigo-900/30 px-3 py-1 rounded-full">Developer</p>
                         </div>
 
                         {/* Developer 2 */}
-                        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col items-center text-center">
-                            <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-slate-50">
+                        <div className="bg-white dark:bg-slate-950 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 flex flex-col items-center text-center">
+                            <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-slate-50 dark:border-slate-800">
                                 <img
-                                    src="/Image (1).jpeg"
+                                    src="/pics/karthikeyan.jpeg"
                                     alt="Karthikeyan"
                                     className="w-full h-full object-cover"
                                 />
                             </div>
-                            <h3 className="text-xl font-bold text-slate-900 mb-1">Karthikeyan</h3>
-                            <p className="text-indigo-600 text-sm font-medium bg-indigo-50 px-3 py-1 rounded-full">Developer</p>
+                            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Karthikeyan</h3>
+                            <p className="text-indigo-600 dark:text-indigo-400 text-sm font-medium bg-indigo-50 dark:bg-indigo-900/30 px-3 py-1 rounded-full">Developer</p>
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* 8. Footer */}
-            <footer className="bg-slate-900 text-slate-400 py-16 border-t border-slate-800">
+            <footer className="bg-slate-900 dark:bg-slate-950 text-slate-400 py-16 border-t border-slate-800 transition-colors duration-300">
                 <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12 mb-12">
                     <div className="col-span-2">
-                        <div className="flex items-center gap-2 mb-6 text-white">
+                        <div className="flex items-center gap-2 mb-6 text-white dark:text-slate-100">
                             <Logo className="w-8 h-8" textSize="text-2xl" />
                         </div>
                         <p className="mb-6 max-w-sm text-sm leading-relaxed text-slate-400">
@@ -325,6 +327,10 @@ export default function LandingPage() {
                             <li className="flex items-center gap-3">
                                 <ShieldCheck className="w-5 h-5 text-indigo-500 shrink-0" />
                                 <span>security@srm.edu.in</span>
+                            </li>
+                            <li className="flex items-center gap-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-indigo-500 shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+                                <span>+91 7598620239</span>
                             </li>
                         </ul>
                     </div>
