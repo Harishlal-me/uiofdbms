@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, CircleCheck, Search, ShieldCheck, Clock, MapPin, ChevronRight, Lock } from 'lucide-react';
+import { ArrowRight, CircleCheck, Search, ShieldCheck, Clock, MapPin, ChevronRight, Lock, BadgeCheck } from 'lucide-react';
 import { Button } from '../../components/ui/Primitives';
 import Logo from '../../components/ui/Logo';
 import { LocationMap } from '../../components/ui/expand-map';
@@ -176,16 +176,31 @@ export default function LandingPage() {
             </section>
 
             {/* 5. Security Section */}
-            <section id="security" className="py-24">
+            <section id="security" className="py-24 bg-slate-50/50">
                 <div className="max-w-7xl mx-auto px-6">
-                    <h2 className="text-3xl font-bold text-slate-900 text-center">
-                        Security
-                    </h2>
+                    <div className="text-center max-w-2xl mx-auto mb-16">
+                        <h2 className="text-3xl font-bold text-slate-900 mb-4">Security</h2>
+                        <p className="text-slate-600 text-lg">
+                            CampusSafe ensures every recovered item is verified and securely handled
+                            through controlled access and ownership verification.
+                        </p>
+                    </div>
 
-                    <p className="text-center text-muted-foreground mt-4 max-w-2xl mx-auto">
-                        CampusSafe ensures every recovered item is verified and securely handled
-                        through controlled access and ownership verification.
-                    </p>
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {[
+                            { icon: ShieldCheck, color: "bg-blue-500", title: "Verified Ownership", desc: "Claimants must verify ownership before item recovery." },
+                            { icon: Lock, color: "bg-emerald-500", title: "Secure Storage", desc: "Recovered items are stored safely in authorized campus locations." },
+                            { icon: BadgeCheck, color: "bg-violet-500", title: "Admin Monitoring", desc: "Campus security verifies and approves every claim." }
+                        ].map((feature, i) => (
+                            <div key={i} className="bg-white p-8 rounded-2xl border border-slate-200 hover:shadow-xl transition-all duration-300">
+                                <div className={`w-14 h-14 ${feature.color} bg-opacity-10 rounded-2xl flex items-center justify-center mb-6`}>
+                                    <feature.icon className={`w-7 h-7 ${feature.color.replace('bg-', 'text-')}`} />
+                                </div>
+                                <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
+                                <p className="text-slate-600 leading-relaxed text-sm">{feature.desc}</p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </section>
 
@@ -227,7 +242,50 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            {/* 5. Footer */}
+            {/* 7. About Section */}
+            <section id="about" className="py-24 bg-slate-50/50 border-t border-slate-100">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="text-center max-w-2xl mx-auto mb-16">
+                        <h2 className="text-3xl font-bold text-slate-900 mb-4">About</h2>
+                        <p className="text-slate-600 text-lg">
+                            CampusSafe is a smart AI-powered lost and found platform designed to help students and campus security quickly locate and recover lost belongings.
+                        </p>
+                        <p className="text-slate-400 text-sm mt-8 uppercase tracking-widest font-semibold">
+                            Built by
+                        </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-10 max-w-3xl mx-auto">
+                        {/* Developer 1 */}
+                        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col items-center text-center">
+                            <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-slate-50">
+                                <img
+                                    src="/Image.jpeg"
+                                    alt="Harishlal"
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <h3 className="text-xl font-bold text-slate-900 mb-1">Harishlal</h3>
+                            <p className="text-indigo-600 text-sm font-medium bg-indigo-50 px-3 py-1 rounded-full">Developer</p>
+                        </div>
+
+                        {/* Developer 2 */}
+                        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col items-center text-center">
+                            <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-slate-50">
+                                <img
+                                    src="/Image (1).jpeg"
+                                    alt="Karthikeyan"
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <h3 className="text-xl font-bold text-slate-900 mb-1">Karthikeyan</h3>
+                            <p className="text-indigo-600 text-sm font-medium bg-indigo-50 px-3 py-1 rounded-full">Developer</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* 8. Footer */}
             <footer className="bg-slate-900 text-slate-400 py-16 border-t border-slate-800">
                 <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12 mb-12">
                     <div className="col-span-2">
