@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight, CircleCheck, Search, ShieldCheck, Clock, MapPin, ChevronRight, Lock } from 'lucide-react';
 import { Button } from '../../components/ui/Primitives';
 import Logo from '../../components/ui/Logo';
+import { LocationMap } from '../../components/ui/expand-map';
 
 export default function LandingPage() {
     const navigate = useNavigate();
@@ -16,8 +17,9 @@ export default function LandingPage() {
 
                     <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
                         <a href="#how-it-works" className="hover:text-indigo-600 transition-colors">How it Works</a>
-                        <a href="#features" className="hover:text-indigo-600 transition-colors">Features</a>
+                        <a href="#why-trusted" className="hover:text-indigo-600 transition-colors">Features</a>
                         <a href="#security" className="hover:text-indigo-600 transition-colors">Security</a>
+                        <a href="#locations" className="hover:text-indigo-600 transition-colors">Locations</a>
                         <a href="#about" className="hover:text-indigo-600 transition-colors">About</a>
                     </div>
 
@@ -113,33 +115,7 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            {/* 3. Features Section */}
-            <section id="features" className="py-24 bg-slate-50/50">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="text-center max-w-2xl mx-auto mb-16">
-                        <h2 className="text-3xl font-bold text-slate-900 mb-4">Why trusted by SRM Security?</h2>
-                        <p className="text-slate-600 text-lg">We replaced the manual "lost book" register with an intelligent, automated system.</p>
-                    </div>
-
-                    <div className="grid md:grid-cols-3 gap-8">
-                        {[
-                            { icon: Search, color: "bg-blue-500", title: "AI Image Matching", desc: "Upload a photo and let our computer vision algorithms find matches based on color, object type, and brand." },
-                            { icon: Lock, color: "bg-emerald-500", title: "Secure Storage", desc: "All found items are stored in dedicated, access-controlled locations across campus (Library, Main Office)." },
-                            { icon: ShieldCheck, color: "bg-violet-500", title: "Verified Recovery", desc: "Claimants must verify ownership through unique identifiers before items are released by security." }
-                        ].map((feature, i) => (
-                            <div key={i} className="bg-white p-8 rounded-2xl border border-slate-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                                <div className={`w-14 h-14 ${feature.color} bg-opacity-10 rounded-2xl flex items-center justify-center mb-6`}>
-                                    <feature.icon className={`w-7 h-7 ${feature.color.replace('bg-', 'text-')}`} />
-                                </div>
-                                <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
-                                <p className="text-slate-600 leading-relaxed text-sm">{feature.desc}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* 4. How It Works (Timeline) */}
+            {/* 3. How It Works (Timeline) */}
             <section id="how-it-works" className="py-24 bg-white relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="text-center mb-20">
@@ -168,6 +144,84 @@ export default function LandingPage() {
                                     <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
                                 </div>
                             ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* 4. Why Trusted Section */}
+            <section id="why-trusted" className="py-24 bg-slate-50/50">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="text-center max-w-2xl mx-auto mb-16">
+                        <h2 className="text-3xl font-bold text-slate-900 mb-4">Why trusted by SRM Security?</h2>
+                        <p className="text-slate-600 text-lg">We replaced the manual "lost book" register with an intelligent, automated system.</p>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {[
+                            { icon: Search, color: "bg-blue-500", title: "AI Image Matching", desc: "Upload a photo and let our computer vision algorithms find matches based on color, object type, and brand." },
+                            { icon: Lock, color: "bg-emerald-500", title: "Secure Storage", desc: "All found items are stored in dedicated, access-controlled locations across campus (Library, Main Office)." },
+                            { icon: ShieldCheck, color: "bg-violet-500", title: "Verified Recovery", desc: "Claimants must verify ownership through unique identifiers before items are released by security." }
+                        ].map((feature, i) => (
+                            <div key={i} className="bg-white p-8 rounded-2xl border border-slate-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                                <div className={`w-14 h-14 ${feature.color} bg-opacity-10 rounded-2xl flex items-center justify-center mb-6`}>
+                                    <feature.icon className={`w-7 h-7 ${feature.color.replace('bg-', 'text-')}`} />
+                                </div>
+                                <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
+                                <p className="text-slate-600 leading-relaxed text-sm">{feature.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* 5. Security Section */}
+            <section id="security" className="py-24">
+                <div className="max-w-7xl mx-auto px-6">
+                    <h2 className="text-3xl font-bold text-slate-900 text-center">
+                        Security
+                    </h2>
+
+                    <p className="text-center text-muted-foreground mt-4 max-w-2xl mx-auto">
+                        CampusSafe ensures every recovered item is verified and securely handled
+                        through controlled access and ownership verification.
+                    </p>
+                </div>
+            </section>
+
+            {/* 6. Locations Section */}
+            <section id="locations" className="py-24 bg-white border-t border-slate-100">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="text-center max-w-2xl mx-auto mb-16">
+                        <h2 className="text-3xl font-bold text-slate-900 mb-4">Locations</h2>
+                        <p className="text-slate-600 text-lg">CampusSafe is currently deployed in the following campus location.</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
+                        {/* Left Info */}
+                        <div className="text-center md:text-left">
+                            <h3 className="text-lg font-semibold text-slate-900 mb-2">SRM KTR Campus</h3>
+                            <p className="text-muted-foreground text-sm leading-relaxed">
+                                One of India's leading engineering campuses with thousands of students and daily campus activity.
+                            </p>
+                        </div>
+
+                        {/* Center Card */}
+                        <div className="flex flex-col items-center justify-center">
+                            <div className="text-slate-400 font-semibold uppercase tracking-wider text-xs mb-4">Deployment Location</div>
+                            <LocationMap
+                                location="SRM Institute of Science and Technology - KTR Campus"
+                                coordinates="12.8230° N, 80.0444° E"
+                                className="mx-auto"
+                            />
+                        </div>
+
+                        {/* Right Info */}
+                        <div className="text-center md:text-right">
+                            <h3 className="text-lg font-semibold text-slate-900 mb-2">CampusSafe Deployment</h3>
+                            <p className="text-muted-foreground text-sm leading-relaxed">
+                                CampusSafe helps students and security instantly match and recover lost items using AI-powered identification.
+                            </p>
                         </div>
                     </div>
                 </div>

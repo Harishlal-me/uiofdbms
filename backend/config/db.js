@@ -1,8 +1,9 @@
 
 const mysql = require('mysql2');
 const dotenv = require('dotenv');
+const path = require('path');
 
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
 const pool = mysql.createPool({
     host: process.env.DB_HOST || 'localhost',
@@ -26,7 +27,7 @@ pool.getConnection((err, connection) => {
         console.error('1. MySQL server is running');
         console.error('2. Database credentials in .env file');
         console.error('3. Database "lost_found_system_2028" exists');
-        process.exit(1); // Exit if DB connection fails
+        console.error('Server will continue running, but database queries will fail until the database is available.');
     } else {
         console.log('✅ Connected to MySQL database:', process.env.DB_NAME);
         connection.release();
